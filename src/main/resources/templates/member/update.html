@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 정보 수정</title>
+</head>
+<body>
+<form action="/member/update" method="post">
+  <input type="hidden" name="id" th:value="${member.id}"> <br>
+  비밀번호:  <input type="text" th:value="${member.password}"  name="password"> <br>
+  이름:  <input type="text"  th:value="${member.name}"  name="name"> <br>
+  이메일: <input type="text"  th:value="${member.email}"  readonly name="email"> <br>
+  <input type="submit" value="회원수정">
+</form>
+</body>
+</html>

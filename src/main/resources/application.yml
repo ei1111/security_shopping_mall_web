@@ -1,0 +1,47 @@
+# default
+spring:
+  profiles:
+    active: local
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/spring_web
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+management:
+  server:
+    port: 8080
+  endpoint:
+    health:
+      show-components: always
+  endpoints:
+    web:
+      exposure:
+        include: "*" #엔드포인트 기능을 액추에이터에 노출시키겠다는것
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true #tomcat 메트릭
+logging:
+  level:
+    root: INFO
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    database: h2

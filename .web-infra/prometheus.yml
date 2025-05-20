@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 1s
+  evaluation_interval: 5s
+#스크랩해오는것을 정한다.
+scrape_configs:
+  - job_name: 'spring-actuator' #프로메테우스를 푸시할때 잡이름 사용
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8080' ] #가져올것을 정함

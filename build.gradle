@@ -1,0 +1,97 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	/*DB*/
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+	/*h2*/
+	runtimeOnly 'com.h2database:h2'
+
+	/*mysql*/
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	/*jpa*/
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	/*thymeleaf*/
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	/*lombok*/
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	/*validation*/
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	/*devtools -> 빠른 애플리케이션 재시작(수정사항을 빨리 볼수 있다)*/
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	/*test*/
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	/*actuator*/
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	/*micrometer*/
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+
+	/* querydsl */
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+
+	/*logback*/
+	implementation 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
+	implementation 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+
+	/*API 문서 생성(Swagger)*/
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+/* querydsl start*/
+def generated = 'build/generated'
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorGeneratedSourcesDirectory = file(generated)
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs += [generated]
+		}
+	}
+}
+/* querydsl end */
