@@ -38,6 +38,10 @@ server:
 logging:
   level:
     root: INFO
+jwt:
+  expire_time: 86400000 #1day
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+
 ---
 spring:
   config:

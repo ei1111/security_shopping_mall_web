@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -36,8 +37,15 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(MemberRequest request, HttpSession session) {
-        return  memberService.findByIdAndPassword(request, session);
+    public String login(@RequestBody MemberRequest request, HttpSession session) {
+        String byIdAndPassword = memberService.findByIdAndPassword(request, session);
+        System.out.println("byIdAndPassword = " + byIdAndPassword);
+        return byIdAndPassword;
+    }
+
+    @GetMapping("/main")
+    public String memberMain() {
+        return "member/main";
     }
 
     @GetMapping("/members")

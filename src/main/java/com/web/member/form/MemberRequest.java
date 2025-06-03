@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -30,7 +31,7 @@ public class MemberRequest {
     private String email;
 
 
-    public Member fromMeber() {
-        return Member.from(userId, password, name, email);
+    public Member fromMeber(PasswordEncoder passwordEncoder) {
+        return Member.from(userId, passwordEncoder.encode(password), name, email);
     }
 }

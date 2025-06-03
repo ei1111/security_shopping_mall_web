@@ -5,11 +5,46 @@
   <title>로그인</title>
 </head>
 <body>
-<form action="/member/login" method="post">
-  아이디:  <input type="userId" name="userId"> <br>
-  비밀번호:  <input type="password" name="password"> <br>
-  <input type="submit" value="로그인">
+<form id="loginForm">
+  아이디: <input type="text" name="userId" id="userId"> <br>
+  비밀번호: <input type="password" name="password" id="password"> <br>
+  <button type="submit">로그인</button>
 </form>
 
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); // 폼 기본 동작 방지
+
+    const userId = document.getElementById('userId').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('/member/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, password })
+    });
+
+
+    if (response.ok) {
+      const token = response.headers.get('Authorization'); // ✅ 헤더에서 토큰 꺼냄
+      localStorage.setItem('token', token);
+      //location.href = "/member/main";
+
+      const tokens = localStorage.getItem('token');
+      const result = await fetch('/board/v1/list', {
+        method: 'GET',
+        headers: {
+          'Authorization': tokens
+        }
+      });
+
+      console.log(result);
+    } else {
+      location.href = "/member/login";
+    }
+  });
+</script>
 </body>
 </html>
