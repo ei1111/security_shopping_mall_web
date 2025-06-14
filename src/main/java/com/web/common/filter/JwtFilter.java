@@ -24,11 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-            FilterChain filterChain)
-            throws ServletException, IOException, IOException {
-        //String authorization = request.getHeader("Authorization");
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException,  IOException {
         Cookie[] cookies = request.getCookies();
         String token = null;
 
@@ -46,8 +42,6 @@ public class JwtFilter extends OncePerRequestFilter {
             //필터 종료
             return;
         }
-
-        //String token = authorization.split(" ")[1];
 
         //토큰 소멸시간 검증 true 소멸, false 소멸 되지 않음
         if (jwtUtil.isExpired(token)) {

@@ -2,6 +2,7 @@ package com.web.member.domain;
 
 
 import ch.qos.logback.core.util.StringUtil;
+import com.web.audit.BaseTimeEntity;
 import com.web.member.form.MemberRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +24,7 @@ import org.hibernate.annotations.Comment;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(exclude = "id")
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @Comment("회원번호")

@@ -6,7 +6,6 @@ import com.web.member.form.MemberResponse;
 import com.web.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,5 +51,10 @@ public class MemberService {
     public void update(MemberRequest request) {
         Member member = findById(request.getId());
         member.update(request);
+    }
+
+    public MemberResponse findByUserId(String userId) {
+        Member member = memberRepository.findByUserId(userId);
+        return MemberResponse.from(member);
     }
 }

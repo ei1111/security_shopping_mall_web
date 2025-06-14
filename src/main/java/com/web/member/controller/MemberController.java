@@ -1,10 +1,8 @@
 package com.web.member.controller;
 
-import com.web.member.domain.Member;
 import com.web.member.form.MemberRequest;
 import com.web.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,21 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/save")
-    public String saveIndex() {
-        return "member/save";
-    }
-
-    @PostMapping("/save")
-    public String save(MemberRequest request) {
-        memberService.save(request);
-        return "member/login";
-    }
-
-    @GetMapping("/login")
-    public String loginForm() {
-        return "member/login";
-    }
 
     @PostMapping("/login")
     public String login(@RequestBody MemberRequest request, HttpSession session) {

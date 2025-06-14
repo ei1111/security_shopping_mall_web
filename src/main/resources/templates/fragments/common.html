@@ -30,10 +30,14 @@
           <a class="nav-link" th:classappend = "${menu} == 'board' ? 'active'" href="/board/list">게시판</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:classappend = "${menu} == 'save' ? 'active'" href="/member/save">회원가입</a>
+          <a class="nav-link" th:classappend = "${menu} == 'login' ? 'active'" href="/member/login">로그인</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logoutBtn" class="nav-link" href="">로그아웃</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:classappend = "${menu} == 'login' ? 'active'" href="/member/login">로그인</a>
+          <a class="nav-link" th:classappend = "${menu} == 'detail' ? 'active'" href="/member/detail">마이 페이지</a>
         </li>
       </ul>
     </div>
