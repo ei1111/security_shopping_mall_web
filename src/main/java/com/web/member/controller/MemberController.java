@@ -39,7 +39,6 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@RequestBody MemberRequest request, HttpSession session) {
         String byIdAndPassword = memberService.findByIdAndPassword(request, session);
-        System.out.println("byIdAndPassword = " + byIdAndPassword);
         return byIdAndPassword;
     }
 

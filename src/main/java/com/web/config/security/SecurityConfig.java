@@ -31,7 +31,8 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private static final String[] AUTH_WHITELIST = {
             "/member/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
-            "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html"
+            "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html" ,"/css/**",
+
     };
 
     /*   @Bean
@@ -81,6 +82,7 @@ public class SecurityConfig {
         //경로별 인가 작업
         httpSecurity.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .anyRequest().authenticated()
                 //.requestMatchers("/admin").hasRole("ADMIN").anyRequest().authenticated()
                 // .anyRequest().permitAll()
         );

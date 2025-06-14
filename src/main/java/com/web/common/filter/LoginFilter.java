@@ -6,6 +6,7 @@ import com.web.member.domain.CustomUserDetails;
 import com.web.member.form.MemberRequest;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -66,7 +67,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String role = auth.getAuthority();
 
         String token = jwtUtil.createJwt(userId, role);
-        response.addHeader("Authorization", "Bearer " + token);
+        //response.addHeader("Authorization", "Bearer " + token);
+
+        Cookie cookie = new Cookie("access_token", token);
+        //cookie.setHttpOnly(true);             // JS 접근 차단
+        //cookie.setSecure(true);               // HTTPS일 때만 전송 (운영 환경에서 꼭 true)
+        cookie.setPath("/");                  // 쿠키가 유효한 경로
+        cookie.setMaxAge(60 * 60 * 24);      // 1일 유효기간
+        response.addCookie(cookie);
     }
 
     //authenticationManager에서 검증 실패시 실행

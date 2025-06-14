@@ -6,6 +6,7 @@ import com.web.member.domain.CustomUserDetails;
 import com.web.member.domain.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,15 +27,27 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain)
             throws ServletException, IOException, IOException {
-        String authorization = request.getHeader("Authorization");
+        //String authorization = request.getHeader("Authorization");
 
-        if (!StringUtils.hasText(authorization) || !authorization.startsWith("Bearer ")) {
+        Cookie[] cookies = request.getCookies();
+        String token = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("access_token".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!StringUtils.hasText(token) ) {
             filterChain.doFilter(request, response);
             //필터 종료
             return;
         }
 
-        String token = authorization.split(" ")[1];
+        //String token = authorization.split(" ")[1];
 
         //토큰 소멸시간 검증 true 소멸, false 소멸 되지 않음
         if (jwtUtil.isExpired(token)) {

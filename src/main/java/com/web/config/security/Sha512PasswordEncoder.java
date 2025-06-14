@@ -21,7 +21,7 @@ public class Sha512PasswordEncoder implements PasswordEncoder {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             byte[] digested = md.digest(input.getBytes());
-            for (int i=0; i<digested.length; i++) {
+            for (int i = 0; i < digested.length; i++) {
                 result.append(Integer.toHexString(0xFF & digested[i]));
             }
         } catch (NoSuchAlgorithmException e) {
