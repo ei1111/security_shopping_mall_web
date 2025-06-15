@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -75,6 +76,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         cookie.setPath("/");                  // 쿠키가 유효한 경로
         cookie.setMaxAge(60 * 60 * 24);      // 1일 유효기간
         response.addCookie(cookie);
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("isNotLogin", false);
     }
 
     //authenticationManager에서 검증 실패시 실행

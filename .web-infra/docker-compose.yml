@@ -10,7 +10,7 @@ services:
       - "3306:3306"
     command:
       - "--character-set-server=utf8mb4"
-      - "--collation-server=utf8mb4_unicode_ci"
+      - "--collation-server=utf8mb4_bin"
   prometheus:
     image: prom/prometheus:latest
     restart: always
