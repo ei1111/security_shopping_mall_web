@@ -4,22 +4,19 @@ import com.web.member.form.MemberRequest;
 import com.web.member.form.MemberResponse;
 import com.web.member.service.MemberService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -48,5 +45,14 @@ public class MemberApiController {
         return ResponseEntity.ok().body(memberService.findByUserId(userId));
     }
 
+    @GetMapping("/update/{id}")
+    public ResponseEntity<MemberResponse> updateForm(@PathVariable Long id) {
+        return ResponseEntity.ok().body(memberService.findById(id));
+    }
 
+    @PutMapping("/update")
+    public ResponseEntity<String> update(@RequestBody MemberRequest request) {
+        memberService.update(request);
+        return ResponseEntity.ok().body("회원 수정 성공");
+    }
 }

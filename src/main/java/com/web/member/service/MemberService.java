@@ -38,8 +38,9 @@ public class MemberService {
                 .toList();
     }
 
-    public Member findById(Long id) {
-        return memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public MemberResponse findById(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return MemberResponse.from(member);
     }
 
     @Transactional
@@ -49,8 +50,8 @@ public class MemberService {
 
     @Transactional
     public void update(MemberRequest request) {
-        Member member = findById(request.getId());
-        member.update(request);
+        Member member = memberRepository.findById(request.getId()).orElseThrow(IllegalArgumentException::new);
+        member.update(request, passwordEncoder);
     }
 
     public MemberResponse findByUserId(String userId) {

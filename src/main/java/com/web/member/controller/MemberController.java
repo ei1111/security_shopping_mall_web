@@ -36,33 +36,14 @@ public class MemberController {
         return "member/members";
     }
 
-    @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable Long id) {
-        model.addAttribute("member", memberService.findById(id));
-        return "member/detail";
-    }
-
+   /*
     @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable Long id) {
         memberService.delete(id);
         return "redirect:member/members";
     }
 
-    @GetMapping("/update/{id}")
-    public String updateForm(Model model, @PathVariable Long id) {
-        model.addAttribute("member", memberService.findById(id));
-        return "member/update";
-    }
+ */
 
-    @PostMapping("/update")
-    public String update(MemberRequest request) {
-        memberService.update(request);
-        return "redirect:/member/members";
-    }
 
-  /*  @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "index";
-    }*/
 }

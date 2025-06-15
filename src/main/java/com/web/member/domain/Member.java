@@ -1,7 +1,6 @@
 package com.web.member.domain;
 
 
-import ch.qos.logback.core.util.StringUtil;
 import com.web.audit.BaseTimeEntity;
 import com.web.member.form.MemberRequest;
 import jakarta.persistence.Column;
@@ -17,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -65,13 +65,17 @@ public class Member extends BaseTimeEntity {
         return new Member(userId, password, name, email);
     }
 
-    public void update(MemberRequest request) {
-        if(!Objects.equals(request.getPassword(), this.password)) {
-            this.password = request.getPassword();
+    public void update(MemberRequest request, PasswordEncoder passwordEncoder) {
+        if (passwordEncoder.matches(request.getPassword(), this.password)) {
+            this.password = passwordEncoder.encode(request.getPassword());
         }
 
         if(!Objects.equals(request.getName(), this.name)) {
             this.name = request.getName();
+        }
+
+        if(!Objects.equals(request.getEmail(), this.email)) {
+            this.email = request.getEmail();
         }
     }
 }

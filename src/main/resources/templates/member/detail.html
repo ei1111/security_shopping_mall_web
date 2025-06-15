@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head th:replace="~{fragments/common :: head('상세조회')}">
   <script defer="" src="/js/bootstrap.bundle.min.js"
           integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
@@ -36,11 +36,11 @@
   </tbody>
 </table>
 
+<input id="id" type="hidden">
+
+<button id="memberUpdate" class="btn btn-success mt-2" style="float: right; width: 10%;">회원 수정</button>
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
-    // URL이나 세션에서 가져올 회원Id
-    const memberId = 1; //예시
-
     try {
       const response = await fetch(`/member/v1/detail`);
 
@@ -52,10 +52,15 @@
       document.getElementById('name').innerText = member.name;
       document.getElementById('userId').innerText = member.userId;
       document.getElementById('email').innerText = member.email;
-
+      document.getElementById('id').value = member.id;
     } catch (error) {
       console.error(error);
     }
+  });
+
+  document.getElementById('memberUpdate').addEventListener('click', () => {
+    const id = document.getElementById('id').value;
+    window.location.href = "/member/update/" + id;
   });
 </script>
 
