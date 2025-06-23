@@ -4,6 +4,7 @@ import com.web.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @Schema(description = "회원 가입 request")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

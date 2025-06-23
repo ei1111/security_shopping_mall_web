@@ -23,12 +23,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString(exclude = "id")
 public class Member extends BaseTimeEntity {
 
     @Id
     @Comment("회원번호")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     @Comment("아이디")
@@ -66,9 +66,7 @@ public class Member extends BaseTimeEntity {
     }
 
     public void update(MemberRequest request, PasswordEncoder passwordEncoder) {
-        if (passwordEncoder.matches(request.getPassword(), this.password)) {
-            this.password = passwordEncoder.encode(request.getPassword());
-        }
+        this.password = passwordEncoder.encode(request.getPassword());
 
         if(!Objects.equals(request.getName(), this.name)) {
             this.name = request.getName();

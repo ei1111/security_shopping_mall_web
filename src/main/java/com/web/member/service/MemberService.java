@@ -19,16 +19,9 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void save(MemberRequest request) {
-        memberRepository.save(request.fromMeber(passwordEncoder));
-    }
-
-    public String findByIdAndPassword(MemberRequest request , HttpSession  session) {
-        return memberRepository.findByUserIdAndPassword(request.getUserId(), request.getPassword())
-                .map(member -> {
-                    session.setAttribute("id", member.getId());
-                    return "member/main";
-                }).orElse("member/login");
+    public MemberResponse save(MemberRequest request) {
+        Member member = memberRepository.save(request.fromMeber(passwordEncoder));
+        return MemberResponse.from(member);
     }
 
     public List<MemberResponse> findAll() {

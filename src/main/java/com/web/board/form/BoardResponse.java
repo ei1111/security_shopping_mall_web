@@ -26,7 +26,7 @@ public class BoardResponse {
     }
 
     public static BoardResponse from(Board board) {
-        return new BoardResponse(board.getBoardId(), board.getTitle(), board.getContent());
+        return new BoardResponse(board.getId(), board.getTitle(), board.getContent());
     }
 
     public void increaseRowNum(AtomicInteger index) {

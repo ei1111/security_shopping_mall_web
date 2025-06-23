@@ -22,8 +22,9 @@ import org.hibernate.annotations.Comment;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Board extends BaseEntity {
     @Id
+    @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long boardId;
+    private Long id;
 
     @Comment("제목")
     private String title;
