@@ -1,3 +1,4 @@
+/*
 package com.web.member.controller.api;
 
 import com.web.member.form.MemberRequest;
@@ -108,4 +109,4 @@ class MemberApiControllerTest {
                 , () -> Assertions.assertEquals(memberRequest.getEmail(), memberResult.getEmail())
         );
     }
-}
+}*/

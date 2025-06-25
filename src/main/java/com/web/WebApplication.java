@@ -1,6 +1,7 @@
 package com.web;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.web.common.util.SecurityUtill;
 import jakarta.persistence.EntityManager;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,7 +21,7 @@ public class WebApplication {
 
 	@Bean
 	public AuditorAware<String> auditorProvider() {
-		return () -> Optional.of(UUID.randomUUID().toString());
+		return () -> Optional.of(SecurityUtill.getUserId());
 	}
 
 	@Bean

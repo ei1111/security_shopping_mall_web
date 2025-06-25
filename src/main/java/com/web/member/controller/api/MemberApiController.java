@@ -1,5 +1,6 @@
 package com.web.member.controller.api;
 
+import com.web.common.util.SecurityUtill;
 import com.web.member.form.MemberRequest;
 import com.web.member.form.MemberResponse;
 import com.web.member.service.MemberService;
@@ -35,13 +36,7 @@ public class MemberApiController {
 
     @GetMapping("/detail")
     public ResponseEntity<MemberResponse> detail() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-
-        if (Objects.isNull(userId)) {
-            return ResponseEntity.notFound().build();
-        }
-
+        String userId = SecurityUtill.getUserId();
         return ResponseEntity.ok().body(memberService.findByUserId(userId));
     }
 

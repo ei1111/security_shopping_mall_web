@@ -12,9 +12,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,23 +30,20 @@ public class BoardApiController {
 
     @GetMapping("/list")
     @Operation(summary = "게시판 작성 리스트 조회 API")
-    public BoardPageResponse list(@PageableDefault Pageable pageable,
-            @RequestParam(required = false) String searchText) {
+    public BoardPageResponse list(@PageableDefault Pageable pageable, @RequestParam(required = false) String searchText) {
         return boardService.findAll(searchText, pageable);
     }
+
 
     @GetMapping("/form")
     @Operation(summary = "게시판 글 조회 API")
     public BoardResponse form(@RequestParam(required = false) @Parameter(example = "1") Long boardId) {
-        return findBoardResponseOrDefault(boardId);
-    }
-
-    private BoardResponse findBoardResponseOrDefault(Long boardId) {
         return Optional.ofNullable(boardId)
                 .map(s -> boardService.findById(s))
                 .map(BoardResponse::from)
                 .orElseGet(BoardResponse::new);
     }
+
 
     @PostMapping("/form")
     @Operation(summary = "게시판 글 등록 API")

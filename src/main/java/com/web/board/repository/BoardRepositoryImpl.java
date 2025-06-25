@@ -1,14 +1,18 @@
 package com.web.board.repository;
 
-import static com.web.board.domain.QBoard.board;
 
-import ch.qos.logback.core.util.StringUtil;
+
+import static com.web.board.domain.QBoard.*;
+import static com.web.member.domain.QMember.*;
+
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.web.board.domain.Board;
+import com.web.board.domain.QBoard;
 import com.web.board.form.BoardResponse;
+import com.web.board.form.QBoardResponse;
+import com.web.member.domain.QMember;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -25,27 +29,35 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     @Override
     public Page<BoardResponse> findByTitleContainingOrContentContaining(String serachWord,
             Pageable pageable) {
+
         AtomicInteger index = new AtomicInteger((int) pageable.getOffset() + 1);
 
         List<BoardResponse> boardResponse = jpaQueryFactory
-                .selectFrom(board)
+                .select(
+                        new QBoardResponse(
+                                board.id,
+                                board.title,
+                                board.content,
+                                member.userId
+                        )
+                )
+                .from(board)
+                .leftJoin(board.member, member)
                 .where(titleEq(serachWord).or(contensEq(serachWord)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(board.createdDate.asc())
                 .fetch()
                 .stream()
-                .map(s -> {
-                    BoardResponse boreadResponse = BoardResponse.from(s);
-                    boreadResponse.increaseRowNum(index);
-                    return boreadResponse;
-                })
+                .peek(s -> s.setRowNum(index.getAndIncrement()))
                 .toList();
 
-        JPAQuery<Board> countQuery = jpaQueryFactory.selectFrom(board)
-                .where(
-                        titleEq(serachWord).or(contensEq(serachWord))
-                );
+        JPAQuery<Long> countQuery = jpaQueryFactory
+                .select(board.count())
+                .from(board)
+                .leftJoin(board.member, member)
+                .where(titleEq(serachWord).or(contensEq(serachWord)));
+
         return PageableExecutionUtils.getPage(boardResponse, pageable, countQuery::fetchCount);
     }
 

@@ -5,6 +5,11 @@ import com.web.board.form.BoardPageResponse;
 import com.web.board.form.BoardRequest;
 import com.web.board.form.BoardResponse;
 import com.web.board.repository.BoardRepository;
+import com.web.common.util.SecurityUtill;
+import com.web.member.domain.Member;
+import com.web.member.form.MemberResponse;
+import com.web.member.repository.MemberRepository;
+import com.web.member.service.MemberService;
 import io.micrometer.core.annotation.Counted;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     public BoardPageResponse findAll(String searchText, Pageable pageable) {
         Page<BoardResponse> boardResponse = boardRepository.findByTitleContainingOrContentContaining(searchText, pageable);
@@ -32,7 +38,9 @@ public class BoardService {
     @Transactional
     @Counted("my.board")
     public void save(BoardRequest boardRequest) {
-        boardRepository.save(Board.from(boardRequest));
+        String userId = SecurityUtill.getUserId();
+        Member member = memberRepository.findByUserId(userId);
+        boardRepository.save(Board.from(boardRequest, member));
     }
 
     @Transactional

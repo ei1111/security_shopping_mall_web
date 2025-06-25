@@ -174,7 +174,7 @@
       tr.innerHTML = `
         <td>${board.rowNum}</td>
         <td><a href="/board/form?boardId=${board.boardId}">${board.title}</a></td>
-        <td>${board.writer || '홍길동'}</td>
+        <td>${board.userId}</td>
       `;
       tbody.appendChild(tr);
     });

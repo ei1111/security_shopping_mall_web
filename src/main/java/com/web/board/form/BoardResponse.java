@@ -1,6 +1,8 @@
 package com.web.board.form;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.web.board.domain.Board;
+import com.web.common.util.SecurityUtill;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,19 +19,18 @@ public class BoardResponse {
     public Long boardId;
     public String title;
     public String content;
+    public String userId;
     public int rowNum;
 
-    public BoardResponse(Long boardId, String title, String content) {
+    @QueryProjection
+    public BoardResponse(Long boardId, String title, String content, String userId) {
         this.boardId = boardId;
         this.title = title;
         this.content = content;
+        this.userId = userId;
     }
 
     public static BoardResponse from(Board board) {
-        return new BoardResponse(board.getId(), board.getTitle(), board.getContent());
-    }
-
-    public void increaseRowNum(AtomicInteger index) {
-        this.rowNum = index.getAndIncrement();
+        return new BoardResponse(board.getId(), board.getTitle(), board.getContent(), SecurityUtill.getUserId());
     }
 }

@@ -2,12 +2,18 @@ package com.web.member.domain;
 
 
 import com.web.audit.BaseTimeEntity;
+import com.web.board.domain.Board;
 import com.web.member.form.MemberRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -46,7 +52,6 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     private String role;
-
 
     public Member(String userId, String password, String name, String email) {
         this.userId = userId;
