@@ -34,13 +34,12 @@ public class BoardApiController {
         return boardService.findAll(searchText, pageable);
     }
 
-
+/*추후 redis 추가*/
     @GetMapping("/form")
     @Operation(summary = "게시판 글 조회 API")
     public BoardResponse form(@RequestParam(required = false) @Parameter(example = "1") Long boardId) {
         return Optional.ofNullable(boardId)
                 .map(s -> boardService.findById(s))
-                .map(BoardResponse::from)
                 .orElseGet(BoardResponse::new);
     }
 
@@ -51,6 +50,7 @@ public class BoardApiController {
         boardService.save(board);
     }
 
+    /*추후 redis 추가*/
     @PutMapping("/form")
     @Operation(summary = "게시판 글 수정 API")
     public void update(@RequestBody BoardRequest board) {

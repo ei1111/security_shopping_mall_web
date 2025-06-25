@@ -20,7 +20,7 @@ public class BoardResponse {
     public String title;
     public String content;
     public String userId;
-    public int rowNum;
+    public Integer rowNum;
 
     @QueryProjection
     public BoardResponse(Long boardId, String title, String content, String userId) {

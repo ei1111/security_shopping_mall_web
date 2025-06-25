@@ -45,7 +45,7 @@ public class Board extends BaseEntity {
         return new Board(boardRequest.boardId, boardRequest.title, boardRequest.content, member);
     }
 
-    public void updateForm(BoardRequest boardRequest) {
+    public Board updateForm(BoardRequest boardRequest) {
         if(!Objects.equals(boardRequest.title, this.title)) {
             this.title = boardRequest.title;
         }
@@ -53,5 +53,7 @@ public class Board extends BaseEntity {
         if(!Objects.equals(boardRequest.content, this.content)) {
             this.content = boardRequest.content;
         }
+
+        return this;
     }
 }
