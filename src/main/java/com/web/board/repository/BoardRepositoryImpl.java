@@ -43,7 +43,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 )
                 .from(board)
                 .leftJoin(board.member, member)
-                .where(titleEq(serachWord).or(contensEq(serachWord)))
+                .where(titleEq(serachWord))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(board.createdDate.asc())
@@ -56,17 +56,13 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .select(board.count())
                 .from(board)
                 .leftJoin(board.member, member)
-                .where(titleEq(serachWord).or(contensEq(serachWord)));
+                .where(titleEq(serachWord));
 
         return PageableExecutionUtils.getPage(boardResponse, pageable, countQuery::fetchCount);
     }
 
     private BooleanBuilder titleEq(String serachWord) {
         return nullSafeBuilder(() -> board.title.contains(serachWord), serachWord);
-    }
-
-    private BooleanBuilder contensEq(String serachWord) {
-        return nullSafeBuilder(() -> board.content.contains(serachWord), serachWord);
     }
 
     public static BooleanBuilder nullSafeBuilder(Supplier<BooleanExpression> supplier, String keyword) {
