@@ -1,4 +1,3 @@
-/*
 package com.web.member.controller.api;
 
 import com.web.member.form.MemberRequest;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
@@ -44,6 +44,7 @@ class MemberApiControllerTest {
 
     @Test
     @DisplayName("저장된 회원을 테스트 할 수 있다")
+    @WithMockUser(username = "user", roles = {"USER"})
     void save() throws Exception {
         //given
         //when
@@ -56,6 +57,7 @@ class MemberApiControllerTest {
 
     @Test
     @DisplayName("아이디로 유저를 찾을 수 있다.")
+    @WithMockUser(username = "user", roles = {"USER"})
     void findByIdToUser() throws Exception {
         //given
         String userId = memberResponse.getUserId();
@@ -71,8 +73,9 @@ class MemberApiControllerTest {
         );
     }
 
-    @DisplayName("회원의 고유 아이디로 회원을 조회 할 수 있다.")
     @Test
+    @WithMockUser(username = "user", roles = {"USER"})
+    @DisplayName("회원의 고유 아이디로 회원을 조회 할 수 있다.")
     void findUserPrimaryKey() throws Exception {
         //given
         Long memberId = memberResponse.getId();
@@ -89,6 +92,7 @@ class MemberApiControllerTest {
 
     @Test
     @DisplayName("회원을 수정 할 수 있다")
+    @WithMockUser(username = "user", roles = {"USER"})
     void updateMember() throws Exception {
         //given
         MemberRequest memberRequest = MemberRequest.builder()
@@ -109,4 +113,4 @@ class MemberApiControllerTest {
                 , () -> Assertions.assertEquals(memberRequest.getEmail(), memberResult.getEmail())
         );
     }
-}*/
+}

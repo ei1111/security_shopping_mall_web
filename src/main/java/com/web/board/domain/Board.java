@@ -41,7 +41,7 @@ public class Board extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    public static Board from(BoardRequest boardRequest,Member member ) {
+    public static Board from(BoardRequest boardRequest,Member member) {
         return new Board(boardRequest.boardId, boardRequest.title, boardRequest.content, member);
     }
 

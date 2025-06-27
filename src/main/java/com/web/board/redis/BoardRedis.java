@@ -1,8 +1,6 @@
 package com.web.board.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web.board.domain.Board;
 import com.web.board.form.BoardResponse;
 import com.web.common.util.CustomObjectMapper;
 import java.time.Duration;

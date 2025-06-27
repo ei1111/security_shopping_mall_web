@@ -59,7 +59,6 @@ public class Member extends BaseTimeEntity {
         this.name = name;
         this.email = email;
         this.role = makeRole(userId);
-
     }
 
     private String makeRole(String userId) {

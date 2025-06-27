@@ -32,7 +32,7 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/member/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
             "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html" ,"/css/**",
-            "/index"
+            "/index" , "/"
     };
 
     /*   @Bean
