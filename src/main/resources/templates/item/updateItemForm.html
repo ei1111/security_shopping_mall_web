@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head th:replace="~{fragments/common :: head('상품수정')}">
+    <script defer="" src="/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
+</head>
+
+
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+         th:replace="fragments/common :: menu('itemUpdate')">
+    </nav>
+</header>
+<body>
+<div class="container">
+    <form id="editForm">
+        <!-- id -->
+        <input type="hidden" name="itemId" id="itemId" />
+        <div class="form-group">
+            <label for="name">상품명</label>
+            <input type="text" id="name" class="form-control" placeholder="이름을 입력하세요" />
+        </div>
+        <div class="form-group">
+            <label for="price">가격</label>
+            <input type="number" id="price" class="form-control" placeholder="가격을 입력하세요" />
+        </div>
+        <div class="form-group">
+            <label for="stockQuantity">수량</label>
+            <input type="number" id="stockQuantity" class="form-control" placeholder="수량을 입력하세요" />
+        </div>
+        <div class="form-group">
+            <label for="author">저자</label>
+            <input type="text" id="author" class="form-control" placeholder="저자를 입력하세요" />
+        </div>
+        <div class="form-group">
+            <label for="isbn">ISBN</label>
+            <input type="text" id="isbn" class="form-control" placeholder="ISBN을 입력하세요" />
+        </div>
+        <button type="submit" class="btn btn-primary">수정</button>
+    </form>
+
+</div> <!-- /container -->
+<script>
+    // 1. URL에서 ID 추출
+    const pathParts = window.location.pathname.split("/");
+    const itemId = pathParts[2]; // 예: /item/123/edit → "123"
+    // 2. 기존 데이터 조회해서 input에 채우기
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch(`/item/v1/${itemId}/edit`)
+        .then(response => response.json())
+        .then(item => {
+            document.getElementById("name").value = item.name;
+            document.getElementById("price").value = item.price;
+            document.getElementById("stockQuantity").value = item.stockQuantity;
+            document.getElementById("author").value = item.author;
+            document.getElementById("isbn").value = item.isbn;
+        })
+        .catch(error => alert("데이터 조회 실패: " + error));
+    });
+
+    // 3. 수정 버튼 누르면 PUT 요청
+    document.getElementById("editForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const data = {
+            name: document.getElementById("name").value,
+            price: parseInt(document.getElementById("price").value),
+            stockQuantity: parseInt(document.getElementById("stockQuantity").value),
+            author: document.getElementById("author").value,
+            isbn: document.getElementById("isbn").value
+        };
+
+        fetch(`/item/v1/${itemId}/edit`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.ok) {
+                alert("상품이 수정되었습니다.");
+                window.location.href = "/item"; // 목록으로 이동
+            } else {
+                alert("수정 실패");
+            }
+        }).catch(error => alert("에러: " + error));
+    });
+</script>
+
+</body>
+</html>

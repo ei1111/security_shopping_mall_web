@@ -21,7 +21,10 @@ public enum ErrorCode {
     , PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "U-003", "비밀번호가 일치하지 않습니다.")
 
     //통신애러
-    , NOT_SUCESS_API_CONNECTION(HttpStatus.BAD_REQUEST, "C-001", "API 통신에 문제가 있습니다");
+    , NOT_SUCESS_API_CONNECTION(HttpStatus.BAD_REQUEST, "C-001", "API 통신에 문제가 있습니다")
+    //주문
+    , ITEM_STOCK_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "O-001","재고 수 보다 주문 수가 많습니다." )
+            ;
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
         this.httpStatus = httpStatus;
         this.errorCode = errorCode;

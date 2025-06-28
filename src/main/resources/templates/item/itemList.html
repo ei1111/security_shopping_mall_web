@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head th:replace="~{fragments/common :: head('상품목록')}">
+    <script defer="" src="/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
+</head>
+
+
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+         th:replace="fragments/common :: menu('itemList')">
+    </nav>
+</header>
+<body>
+<div class="container">
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>재고수량</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="itemTableBody">
+            <!-- JavaScript가 여기에 데이터 추가 -->
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("/item/v1/list")  // REST API 엔드포인트
+        .then(response => {
+            if (!response.ok) throw new Error("상품 목록을 불러오는데 실패했습니다.");
+            return response.json();
+        })
+        .then(data => {
+            const tbody = document.getElementById("itemTableBody");
+            tbody.innerHTML = ""; // 초기화
+            data.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                        <td>${item.rowNum}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                        <td>${item.stockQuantity}</td>
+                        <td><a href="/items/${item.itemId}/edit" class="btn btn-primary">수정</a></td>
+                    `;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(error => {
+            alert("에러: " + error.message);
+        });
+    });
+</script>
+</body>
+</html>

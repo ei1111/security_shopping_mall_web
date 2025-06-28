@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head th:replace="~{fragments/common :: head('상품등록')}">
+    <script defer="" src="/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
+</head>
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+         th:replace="fragments/common :: menu('createItemForm')">
+    </nav>
+</header>
+<body>
+<div class="p-5 container mt-5">
+    <h1 class="mt-2">상품등록</h1>
+    <form id="itemForm">
+
+        <div class="form-group mb-3">
+            <label for="image">상품 이미지</label>
+            <input type="file" id="image" name="image" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="name">상품명</label>
+            <input type="text" id="name" class="form-control" placeholder="이름을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="price">가격</label>
+            <input type="number" id="price" class="form-control" placeholder="가격을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="stockQuantity">수량</label>
+            <input type="number" id="stockQuantity" class="form-control" placeholder="수량을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="author">저자</label>
+            <input type="text" id="author" class="form-control" placeholder="저자를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="isbn">ISBN</label>
+            <input type="text" id="isbn" class="form-control" placeholder="ISBN을 입력하세요">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+</div> <!-- /container -->
+
+<script>
+    document.getElementById("itemForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // FormData 객체 생성
+        const form = document.getElementById("itemForm");
+        const formData = new FormData(form);
+
+        fetch("/item/v1/new", {
+            method: "POST",
+            body: formData  // Content-Type 자동 설정됨
+        }).then(response => {
+            if (response.ok) {
+                alert("상품이 등록되었습니다.");
+                form.reset();
+            } else {
+                return response.json().then(err => {
+                    alert("오류 발생: " + JSON.stringify(err));
+                });
+            }
+        }).catch(error => {
+            alert("네트워크 오류: " + error);
+        });
+    });
+</script>
+</body>
+</html>
