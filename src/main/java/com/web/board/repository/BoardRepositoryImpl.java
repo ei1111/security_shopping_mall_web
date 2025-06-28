@@ -46,7 +46,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .where(titleEq(serachWord))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(board.createdDate.asc())
+                .orderBy(board.createdDate.desc())
                 .fetch()
                 .stream()
                 .peek(s -> s.setRowNum(index.getAndIncrement()))
@@ -56,7 +56,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .select(board.count())
                 .from(board)
                 .leftJoin(board.member, member)
-                .where(titleEq(serachWord));
+                .where(titleEq(serachWord))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
 
         return PageableExecutionUtils.getPage(boardResponse, pageable, countQuery::fetchCount);
     }

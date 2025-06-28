@@ -78,7 +78,7 @@
 <header>
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
-       th:replace="fragments/common :: menu('board')">
+       th:replace="~{fragments/common :: menu('board')}">
   </nav>
 </header>
 
@@ -184,6 +184,7 @@
   function renderPagination(currentPage, totalPages, startPage, endPage, searchText = '') {
     const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';
+
 
     // Previous
     const prevDisabled = currentPage === 0 ? 'disabled' : '';

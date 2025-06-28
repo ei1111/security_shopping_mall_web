@@ -23,6 +23,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 
 @Getter
 @Setter
@@ -70,7 +71,9 @@ public class Member extends BaseTimeEntity {
     }
 
     public void update(MemberRequest request, PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(request.getPassword());
+        if (StringUtils.hasText(request.getPassword())) {
+            this.password = passwordEncoder.encode(request.getPassword());
+        }
 
         if(!Objects.equals(request.getName(), this.name)) {
             this.name = request.getName();
