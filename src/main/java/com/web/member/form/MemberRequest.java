@@ -2,6 +2,7 @@ package com.web.member.form;
 
 import com.web.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,15 @@ public class MemberRequest {
 
     @Schema(description = "이메일")
     private String email;
+
+    @Schema(description = "거주도시", example = "서울")
+    private  String city;
+
+    @Schema(description = "도로명", example = "양갈로")
+    private String street;
+
+    @Schema(description = "우편번호", example = "01321")
+    private String zipcode;
 
 
     public Member fromMeber(PasswordEncoder passwordEncoder) {

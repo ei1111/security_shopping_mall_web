@@ -2,6 +2,7 @@ package com.web.member.form;
 
 import com.web.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +30,26 @@ public class MemberResponse {
     @Schema(description = "이메일")
     private String email;
 
+    @Schema(description = "거주도시", example = "서울")
+    String city;
+
+    @Schema(description = "도로명", example = "양갈로")
+    String street;
+
+    @Schema(description = "우편번호", example = "01321")
+    String zipcode;
+
     public static MemberResponse from(Member member) {
-        return new MemberResponse(member.getId(), member.getUserId(), member.getPassword(), member.getName(), member.getEmail());
+        return new MemberResponse(
+                member.getId(),
+                member.getUserId(),
+                member.getPassword(),
+                member.getName(),
+                member.getEmail(),
+                member.getAddress().getCity(),
+                member.getAddress().getStreet(),
+                member.getAddress().getZipcode()
+
+        );
     }
 }

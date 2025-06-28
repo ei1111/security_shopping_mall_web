@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head th:replace="~{fragments/common :: head('회원 상세 조회')}">
+  <script defer="" src="/js/bootstrap.bundle.min.js"
+          integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
+</head>
+
+<header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+       th:replace="~{fragments/common :: menu('memberList')}">
+  </nav>
+</header>
+<!-- Bootstrap -->
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <div>
+    <table class="table table-striped" id="memberTable">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>이름</th>
+        <th>도시</th>
+        <th>주소</th>
+        <th>우편번호</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div> <!-- /container -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/member/v1/list")
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector("#memberTable tbody");
+      data.forEach(member => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${member.id}</td>
+            <td>${member.name}</td>
+            <td>${member.city || ''}</td>
+            <td>${member.street || ''}</td>
+            <td>${member.zipcode || ''}</td>
+          `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(error => {
+      console.error("멤버 데이터를 불러오는 중 오류 발생:", error);
+    });
+  });
+</script>
+</body>
+</html>

@@ -48,4 +48,9 @@ public class MemberViewController {
         model.addAttribute("id", id);
         return "member/update";
     }
+
+    @GetMapping("/memberList")
+    public String memberListForm() {
+        return "member/memberList";
+    }
 }
