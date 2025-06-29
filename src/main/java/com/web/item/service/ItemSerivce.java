@@ -1,9 +1,12 @@
 package com.web.item.service;
 
+import com.web.board.form.BoardResponse;
 import com.web.item.domain.Item;
 import com.web.item.form.ItemRequest;
 import com.web.item.form.ItemResponse;
 import com.web.item.repository.ItemRepository;
+import com.web.redis.RedisKeyPrefix;
+import com.web.redis.RedisManager;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ItemSerivce {
     private final ItemRepository itemRepository;
     private static final String UPLOAD_PATH = "/Users/manjae/Documents/code/spring_projdct/web_project/upload/";
+    private final RedisManager redisManager;
 
     @Transactional
     public void save(MultipartFile imageFile, ItemRequest request) {
@@ -39,9 +43,17 @@ public class ItemSerivce {
     }
 
     public ItemResponse findById(Long itemId) {
-        return itemRepository.findById(itemId)
+        if (Objects.nonNull(redisManager.get(RedisKeyPrefix.ITEM_DETAIL, itemId, ItemResponse.class))) {
+            return redisManager.get(RedisKeyPrefix.ITEM_DETAIL, itemId, ItemResponse.class);
+        }
+
+        ItemResponse itemResponse = itemRepository.findById(itemId)
                 .map(ItemResponse::from)
                 .orElseThrow(IllegalArgumentException::new);
+
+        redisManager.set(RedisKeyPrefix.ITEM_DETAIL, itemId, itemResponse);
+
+        return itemResponse;
     }
 
     @Transactional
@@ -53,7 +65,8 @@ public class ItemSerivce {
                 imagePath = getImagePath(imageFile);
         }
 
-        item.updateForm(request, imagePath);
+        Item updateItem = item.updateForm(request, imagePath);
+        redisManager.set(RedisKeyPrefix.ITEM_DETAIL, itemId , ItemResponse.from(updateItem));
     }
 
     private String getImagePath(MultipartFile imageFile) {

@@ -1,4 +1,4 @@
-package com.web.board.redis;
+package com.web.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.web.board.form.BoardResponse;
@@ -10,48 +10,46 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class BoardRedis {
-    private static final String KEY_PREFIX = "board_detail:v1:";
-    private static final Long EXPIRE_SECONDS = 60 * 60 *  24 * 7L; // 1주일
+public class RedisManager {
     private final CustomObjectMapper customObjectMapper = new CustomObjectMapper();
     private final RedisTemplate<String, String> redisTemplate;
+    private static final Long EXPIRE_SECONDS = 60 * 60 *  24 * 7L; // 1주일
 
-    public BoardResponse get(Long postId) {
-        String jsonString = redisTemplate.opsForValue().get(generateCacheKey(postId));
+    public <T> T get(RedisKeyPrefix keyPrefix, Long id, Class<T> clazz) {
+        String jsonString = redisTemplate.opsForValue().get(generateCacheKey(keyPrefix, id));
 
         if (jsonString == null) {
             return null;
         }
 
         try {
-            return customObjectMapper.readValue(jsonString, BoardResponse.class);
+            return customObjectMapper.readValue(jsonString, clazz);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void set(BoardResponse boardResponse) {
+    public <T> void set(RedisKeyPrefix keyPrefix, Long id, T data) {
         String jsonString;
 
         try {
-            jsonString = customObjectMapper.writeValueAsString(boardResponse);
+            jsonString = customObjectMapper.writeValueAsString(data);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        //key, cache, TTL(캐시의 유효기간)
         redisTemplate.opsForValue().set(
-                generateCacheKey(boardResponse.getBoardId()),
+                generateCacheKey(keyPrefix, id),
                 jsonString,
                 Duration.ofSeconds(EXPIRE_SECONDS)
         );
     }
 
-    public void delete(Long boardId) {
-        redisTemplate.delete(generateCacheKey(boardId));
+    public void delete(RedisKeyPrefix keyPrefix, Long id) {
+        redisTemplate.delete(generateCacheKey(keyPrefix, id));
     }
 
-    private String generateCacheKey(Long boardId) {
-        return KEY_PREFIX + boardId;
+    private String generateCacheKey(RedisKeyPrefix keyPrefix, Long id) {
+        return keyPrefix.getPrefix() + id;
     }
 }

@@ -4,17 +4,13 @@ import com.web.board.domain.Board;
 import com.web.board.form.BoardPageResponse;
 import com.web.board.form.BoardRequest;
 import com.web.board.form.BoardResponse;
-import com.web.board.redis.BoardRedis;
 import com.web.board.repository.BoardRepository;
 import com.web.common.util.SecurityUtill;
 import com.web.member.domain.Member;
-import com.web.member.form.MemberResponse;
 import com.web.member.repository.MemberRepository;
-import com.web.member.service.MemberService;
+import com.web.redis.RedisKeyPrefix;
+import com.web.redis.RedisManager;
 import io.micrometer.core.annotation.Counted;
-import jakarta.persistence.EntityNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
-    private final BoardRedis boardRedis;
+    private final RedisManager redisManager;
 
     public BoardPageResponse findAll(String searchText, Pageable pageable) {
         Page<BoardResponse> boardResponse = boardRepository.findByTitleContainingOrContentContaining(searchText, pageable);
@@ -36,14 +32,13 @@ public class BoardService {
     }
 
     public BoardResponse findById(Long id) {
-
-        if (Objects.nonNull(boardRedis.get(id))) {
-            return boardRedis.get(id);
+        if (Objects.nonNull(redisManager.get(RedisKeyPrefix.BOARD_DETAIL, id, BoardResponse.class))) {
+            return redisManager.get(RedisKeyPrefix.BOARD_DETAIL, id, BoardResponse.class);
         }
 
         Board board = boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         BoardResponse boardResponse = BoardResponse.from(board);
-        boardRedis.set(boardResponse);
+        redisManager.set(RedisKeyPrefix.BOARD_DETAIL, id, boardResponse);
 
         return boardResponse;
     }
@@ -61,6 +56,6 @@ public class BoardService {
     public void update(BoardRequest boardRequest) {
         Board board = boardRepository.findById(boardRequest.getBoardId()).orElseThrow(IllegalArgumentException::new);
         Board updateBoard = board.updateForm(boardRequest);
-        boardRedis.set(BoardResponse.from(updateBoard));
+        redisManager.set(RedisKeyPrefix.BOARD_DETAIL, boardRequest.getBoardId(), BoardResponse.from(updateBoard));
     }
 }

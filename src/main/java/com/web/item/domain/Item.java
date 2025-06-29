@@ -60,7 +60,7 @@ public class Item extends BaseEntity {
         return new Item(request, imagePath);
     }
 
-    public void updateForm(ItemRequest request, String imagePath) {
+    public Item updateForm(ItemRequest request, String imagePath) {
         updateIfChanged(request.name(), this.name, v -> this.name = v);
         updateIfChanged(request.price(), this.price, v -> this.price = v);
         updateIfChanged(request.stockQuantity(), this.stockQuantity, v -> this.stockQuantity = v);
@@ -70,6 +70,7 @@ public class Item extends BaseEntity {
         if (StringUtils.hasText(imagePath)) {
             this.imagePath = imagePath;
         }
+        return this;
     }
 
     private <T> void updateIfChanged(T newValue, T oldValue, Consumer<T> consumer) {
