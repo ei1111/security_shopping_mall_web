@@ -25,6 +25,10 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 management:
   server:
     port: 8080

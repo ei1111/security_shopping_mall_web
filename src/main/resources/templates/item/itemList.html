@@ -12,14 +12,39 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
          th:replace="fragments/common :: menu('itemList')">
     </nav>
+
+    <style>
+        /* 이미지 크기 및 간격 줄이기 */
+        table td img {
+            width: 70px;  /* 이미지 크기 줄이기 */
+            height: 70px;
+            margin-right: 10px;  /* 이미지 오른쪽에 간격 추가 */
+        }
+
+        /* 테이블 셀 간격 조정 */
+        table td {
+            padding: 5px;  /* 상하좌우 간격 줄이기 */
+        }
+
+        table th {
+            padding: 10px;  /* 헤더는 기본 간격 유지 */
+        }
+
+        /* 이미지 열의 th 가로 크기 줄이기 */
+        table th:nth-child(2) {
+            width: 250px;  /* 이미지 열의 가로 크기를 120px로 지정 */
+        }
+    </style>
 </header>
 <body>
 <div class="container">
+    <h1 class="p-5 mt-5">상품리스트</h1>
     <div>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>#</th>
+                <th>이미지</th>
                 <th>상품명</th>
                 <th>가격</th>
                 <th>재고수량</th>
@@ -47,10 +72,11 @@
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                         <td>${item.rowNum}</td>
+                        <td><img src=${item.imagePath} alt="상품 이미지" ></td>
                         <td>${item.name}</td>
                         <td>${item.price}</td>
                         <td>${item.stockQuantity}</td>
-                        <td><a href="/items/${item.itemId}/edit" class="btn btn-primary">수정</a></td>
+                        <td><a href="/item/${item.itemId}/edit" class="btn btn-primary">수정</a></td>
                     `;
                 tbody.appendChild(tr);
             });

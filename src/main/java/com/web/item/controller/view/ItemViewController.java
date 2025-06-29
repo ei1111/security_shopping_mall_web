@@ -22,6 +22,6 @@ public class ItemViewController {
     @GetMapping("/{itemId}/edit")
     public String updateForm(@PathVariable Long itemId, Model model) {
         model.addAttribute("itemId", itemId);
-        return "items/updateItemForm";
+        return "item/updateItemForm";
     }
 }

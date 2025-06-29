@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,11 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemApiController {
     private final ItemSerivce itemSerivce;
 
+
     @PostMapping("/new")
     @Operation(summary = "상품 정보 등록 API")
-    public void save(@Valid @RequestBody ItemRequest request) {
-        itemSerivce.save(request);
+    public void save(
+            @RequestPart("image") MultipartFile imageFile, // 파일 받기
+            @RequestPart("data") @Valid ItemRequest request // JSON 데이터 받기
+    ) {
+        itemSerivce.save(imageFile , request);
     }
+
 
     @GetMapping("/list")
     @Operation(summary = "상품 리스트 API")
@@ -44,7 +51,11 @@ public class ItemApiController {
 
     @PutMapping("/{itemId}/edit")
     @Operation(summary = "상품 수정 API")
-    public void update(@PathVariable Long itemId, @Valid @RequestBody ItemRequest request) {
-        itemSerivce.update(itemId, request);
+    public void update(
+            @PathVariable Long itemId,
+            @RequestPart(value = "image", required = false) MultipartFile imageFile,
+            @RequestPart("data") ItemRequest request
+    ) {
+        itemSerivce.update(itemId, imageFile, request);
     }
 }

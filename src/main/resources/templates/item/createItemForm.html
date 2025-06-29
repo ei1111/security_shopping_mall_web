@@ -14,8 +14,8 @@
 <body>
 <div class="p-5 container mt-5">
     <h1 class="mt-2">상품등록</h1>
-    <form id="itemForm">
 
+    <form id="itemForm">
         <div class="form-group mb-3">
             <label for="image">상품 이미지</label>
             <input type="file" id="image" name="image" class="form-control">
@@ -50,9 +50,21 @@
     document.getElementById("itemForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
-        // FormData 객체 생성
         const form = document.getElementById("itemForm");
-        const formData = new FormData(form);
+
+        // FormData 객체 생성
+        const formData = new FormData();
+        formData.append("image", document.getElementById("image").files[0]); // 파일 추가
+
+        const data = {
+            name: document.getElementById("name").value,
+            price: parseInt(document.getElementById("price").value),
+            stockQuantity: parseInt(document.getElementById("stockQuantity").value),
+            author: document.getElementById("author").value,
+            isbn: document.getElementById("isbn").value
+        };
+
+        formData.append("data", new Blob([JSON.stringify(data)], {type: "application/json"}));
 
         fetch("/item/v1/new", {
             method: "POST",

@@ -15,9 +15,25 @@
 </header>
 <body>
 <div class="container">
+    <h1 class="p-5 mt-5">상품수정</h1>
+
     <form id="editForm">
         <!-- id -->
         <input type="hidden" name="itemId" id="itemId" />
+
+        <!-- 기존 이미지 표시 -->
+        <div class="form-group">
+            <label>기존 이미지</label><br>
+            <img id="currentImage" src="" alt="현재 상품 이미지" width="100" height="100">
+        </div>
+
+        <!-- 새 이미지 선택 -->
+        <div class="form-group">
+            <label for="image">새 상품 이미지</label>
+            <input type="file" id="image" name="image" class="form-control">
+        </div>
+
+
         <div class="form-group">
             <label for="name">상품명</label>
             <input type="text" id="name" class="form-control" placeholder="이름을 입력하세요" />
@@ -38,7 +54,9 @@
             <label for="isbn">ISBN</label>
             <input type="text" id="isbn" class="form-control" placeholder="ISBN을 입력하세요" />
         </div>
+        <br>
         <button type="submit" class="btn btn-primary">수정</button>
+        <button type="button" class="btn btn-secondary" id="cancelButton">취소</button>
     </form>
 
 </div> <!-- /container -->
@@ -56,6 +74,7 @@
             document.getElementById("stockQuantity").value = item.stockQuantity;
             document.getElementById("author").value = item.author;
             document.getElementById("isbn").value = item.isbn;
+            document.getElementById("currentImage").src = item.imagePath;
         })
         .catch(error => alert("데이터 조회 실패: " + error));
     });
@@ -63,6 +82,15 @@
     // 3. 수정 버튼 누르면 PUT 요청
     document.getElementById("editForm").addEventListener("submit", function (e) {
         e.preventDefault();
+
+        const formData = new FormData();
+
+        // 새 이미지가 선택됐을 때만 추가
+        const imageFile = document.getElementById("image").files[0];
+
+        if (imageFile) {
+            formData.append("image", imageFile);
+        }
 
         const data = {
             name: document.getElementById("name").value,
@@ -72,20 +100,25 @@
             isbn: document.getElementById("isbn").value
         };
 
+        // JSON 데이터 추가
+        formData.append("data", new Blob([JSON.stringify(data)], { type: "application/json" }));
+
+
         fetch(`/item/v1/${itemId}/edit`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
+            body: formData
         }).then(response => {
             if (response.ok) {
                 alert("상품이 수정되었습니다.");
-                window.location.href = "/item"; // 목록으로 이동
+                window.location.href = "/item/itemList"; // 목록으로 이동
             } else {
                 alert("수정 실패");
             }
         }).catch(error => alert("에러: " + error));
+    });
+
+    document.getElementById('cancelButton').addEventListener('click', function () {
+        window.history.back(); // 이전 페이지로 이동
     });
 </script>
 

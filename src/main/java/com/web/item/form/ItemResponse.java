@@ -37,6 +37,10 @@ public class ItemResponse {
     @Schema(name = "게시글 순서")
     public Integer rowNum;
 
+    @Schema(name = "이미지 주소")
+    public String imagePath;
+
+
     private ItemResponse(Item item) {
         this.itemId = item.getId();
         this.name = item.getName();
@@ -44,10 +48,11 @@ public class ItemResponse {
         this.stockQuantity = item.getStockQuantity();
         this.author = item.getAuthor();
         this.isbn = item.getIsbn();
+        this.imagePath =  item.getImagePath();
     }
 
     public static ItemResponse from(Item item, AtomicInteger rowNum) {
-        return new ItemResponse(item.getId(), item.getName(), item.getPrice(), item.getStockQuantity(), item.getAuthor(), item.getIsbn(), rowNum.getAndIncrement());
+        return new ItemResponse(item.getId(), item.getName(), item.getPrice(), item.getStockQuantity(), item.getAuthor(), item.getIsbn(), rowNum.getAndIncrement(), item.getImagePath());
     }
 
     public static ItemResponse from(Item item) {

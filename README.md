@@ -6,12 +6,12 @@
 ### MySQL
 ### Thymeleaf
 ### H2
+### Redis
 ### Prometheus
 ### Grafana
 ### logback
 ### k6
 ### Swagger
-### Slack Webhook(추후 해야 함)
 ### Slack Webhook(Alertmanager, 추후 해야 함)
 ___
 ## 로직

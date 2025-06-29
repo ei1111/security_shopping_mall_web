@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Getter
@@ -43,24 +44,32 @@ public class Item extends BaseEntity {
     @Comment( "상품 isbn")
     private String isbn;
 
-    private Item(ItemRequest request) {
+    @Comment( "상품 이미지 주소")
+    private String imagePath;
+
+    private Item(ItemRequest request, String imagePath) {
         this.name = request.name();
         this.price = request.price();
         this.stockQuantity = request.stockQuantity();
         this.author = request.author();
         this.isbn = request.isbn();
+        this.imagePath = imagePath;
     }
 
-    public static Item from(ItemRequest request) {
-        return new Item(request);
+    public static Item from(ItemRequest request, String imagePath) {
+        return new Item(request, imagePath);
     }
 
-    public void updateForm(ItemRequest request) {
+    public void updateForm(ItemRequest request, String imagePath) {
         updateIfChanged(request.name(), this.name, v -> this.name = v);
         updateIfChanged(request.price(), this.price, v -> this.price = v);
         updateIfChanged(request.stockQuantity(), this.stockQuantity, v -> this.stockQuantity = v);
         updateIfChanged(request.author(), this.author, v -> this.author = v);
         updateIfChanged(request.isbn(), this.isbn, v -> this.isbn = v);
+
+        if (StringUtils.hasText(imagePath)) {
+            this.imagePath = imagePath;
+        }
     }
 
     private <T> void updateIfChanged(T newValue, T oldValue, Consumer<T> consumer) {

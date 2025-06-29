@@ -26,27 +26,31 @@
         <li class="nav-item">
           <a class="nav-link" th:classappend= "${menu} == 'home' ? 'active'" aria-current="page" href="/index">홈</a>
         </li>
-        <li class="nav-item"  th:if="${session.isNotLogin == false}">
-          <a class="nav-link" th:classappend = "${menu} == 'board' ? 'active'" href="/board/list">게시판</a>
-        </li>
-        <li class="nav-item" th:if="${session.isNotLogin == true || session.isNotLogin == null }"   >
-          <a class="nav-link" th:classappend="${menu} == 'login' ? 'active'" href="/member/login">로그인</a>
-        </li>
 
         <li class="nav-item" th:if="${session.isNotLogin == false}"  >
           <a id="logoutBtn" class="nav-link" href="/member/logout">로그아웃</a>
         </li>
+
+        <li class="nav-item"  th:if="${session.isNotLogin == false}">
+          <a class="nav-link" th:classappend = "${menu} == 'board' ? 'active'" href="/board/list">게시판</a>
+        </li>
+
+        <li class="nav-item" th:if="${session.isNotLogin == true || session.isNotLogin == null }"   >
+          <a class="nav-link" th:classappend="${menu} == 'login' ? 'active'" href="/member/login">로그인</a>
+        </li>
+
+
         <li class="nav-item"  th:if="${session.isNotLogin == false}">
           <a class="nav-link" th:classappend = "${menu} == 'detail' ? 'active'" href="/member/detail">마이 페이지</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" th:if="${session.isNotLogin == false}">
           <a class="nav-link" th:classappend= "${menu} == 'memberList' ? 'active'" href="/member/memberList">회원리스트</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" th:if="${session.isNotLogin == false}">
           <a class="nav-link" th:classappend= "${menu} == 'createItemForm' ? 'active'" href="/item/createItemForm">상품 등록</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" th:classappend= "${menu} == 'itemList' ? 'active'" href="/member/itemList">상품리스트</a>
+        <li class="nav-item" th:if="${session.isNotLogin == false}">
+          <a class="nav-link" th:classappend= "${menu} == 'itemList' ? 'active'" href="/item/itemList">상품리스트</a>
         </li>
       </ul>
     </div>
