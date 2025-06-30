@@ -4,8 +4,10 @@ import com.web.board.form.BoardPageResponse;
 import com.web.board.form.BoardRequest;
 import com.web.board.form.BoardResponse;
 import com.web.board.service.BoardService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.Optional;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/board/v1")
 @Tag(name = "게시판 CRUD API")
+@OpenAPIDefinition(info = @Info(title = "쇼핑물 API", description = "쇼핑몰 서버에서 제공하는 각종 메타정보 API", version = "v1"))
 public class BoardApiController {
 
     private final BoardService boardService;

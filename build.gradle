@@ -97,6 +97,9 @@ dependencies {
 	/*재시도시 사용하는 @Retryable, @Recover*/
 	implementation 'org.springframework.retry:spring-retry'
 	implementation 'org.springframework:spring-aspects'
+
+	/*kafka*/
+	implementation 'org.springframework.kafka:spring-kafka'
 }
 
 tasks.named('test') {

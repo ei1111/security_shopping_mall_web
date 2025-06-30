@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    database: h2
+jwt:
+  expire_time: 86400000 #1day
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+payment:
+  imp:
+    key: fake-key-for-test
+    secret: fake-secret-for-test
