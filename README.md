@@ -12,7 +12,7 @@
 ### logback
 ### k6
 ### Swagger
-### Slack Webhook(Alertmanager, 추후 해야 함)
+### Slack Webhook
 ___
 ## 로직
 swagger로 테스트 할 수 있습니다.<br>
