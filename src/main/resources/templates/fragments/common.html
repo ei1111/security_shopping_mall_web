@@ -52,6 +52,13 @@
         <li class="nav-item" th:if="${session.isNotLogin == false}">
           <a class="nav-link" th:classappend= "${menu} == 'itemList' ? 'active'" href="/item/itemList">상품리스트</a>
         </li>
+        <li class="nav-item" th:if="${session.isNotLogin == false}">
+          <a class="nav-link" th:classappend= "${menu} == 'order' ? 'active'" href="/order/new">상품주문</a>
+        </li>
+
+        <li class="nav-item" th:if="${session.isNotLogin == false}">
+          <a class="nav-link" th:classappend= "${menu} == 'orderList' ? 'active'" href="/order/orderList">상품주문리스트</a>
+        </li>
       </ul>
     </div>
   </div>

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.web.client.RestClient;
 
 @EnableJpaAuditing
 @EnableMethodSecurity
@@ -29,5 +30,10 @@ public class WebApplication {
 	@Bean
 	JPAQueryFactory queryFactory(EntityManager em) {
 		return new JPAQueryFactory(em);
+	}
+
+	@Bean
+	public RestClient restClient() {
+		return RestClient.create();
 	}
 }

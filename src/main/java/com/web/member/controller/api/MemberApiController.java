@@ -54,7 +54,7 @@ public class MemberApiController {
     }
 
     @GetMapping("/list")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "회원 리스트 API")
     public ResponseEntity<List<MemberResponse>> memberList() {
         return ResponseEntity.ok(memberService.findAll());

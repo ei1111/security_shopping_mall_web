@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('상품주문리스트')}">
+    <script defer="" src="/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
+</head>
+
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+         th:replace="fragments/common :: menu('orderList')">
+    </nav>
+</header>
+<!-- Bootstrap -->
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+</head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 포트원 결제 -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <!-- 포트원 결제 -->
+</head>
+<body>
+<div class="p-5 container mt-5">
+    <h1 class="p-2 mt-3">상품주문리스트</h1>
+    <div>
+        <div>
+            <form id="searchForm" class="form-inline">
+                <div class="form-group mb-2">
+                    <input type="text" id="memberName" class="form-control" placeholder="회원명" />
+                </div>
+                <div class="form-group mx-sm-1 mb-2">
+                    <select id="orderStatus" class="form-control">
+                        <option value="">주문상태</option>
+                        <option value="ORDER">ORDER</option>
+                        <option value="CANCEL">CANCEL</option>
+                        <option value="PAYMENT">PAYMENT</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">검색</button>
+            </form>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>no</th>
+                <th>회원명</th>
+                <th>상품명</th>
+                <th>주문가격</th>
+                <th>주문수량</th>
+                <th>상태</th>
+                <th>일시</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="orderTableBody">
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+</body>
+<script>
+    document.getElementById('searchForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const memberName = document.getElementById('memberName').value;
+        const orderStatus = document.getElementById('orderStatus').value;
+
+        const res = await fetch(`/order/v1/list?memberName=${memberName}&orderStatus=${orderStatus}`);
+        const orders = await res.json();
+
+        const tbody = document.getElementById('orderTableBody');
+        tbody.innerHTML = '';
+        orders.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <input type="hidden" id="orderId" value="${item.id}" />
+            <td>1</td>
+            <td>${item.memberName}</td>
+            <td>${item.orderItems[0]?.itemName ?? ''}</td>
+            <td>${item.orderItems[0]?.orderPrice ?? ''}</td>
+            <td>${item.orderItems[0]?.count ?? ''}</td>
+            <td>${item.status}</td>
+            <td>${item.orderDate}</td>
+            <td>
+                ${item.status === 'ORDER' ? `<button id="payment-button" class="btn btn-success mb-2" onclick="paymentProcess(${item.id}, '${item.memberName}','${item.orderItems[0]?.itemName}', ${item.orderItems[0]?.orderPrice}, ${item.orderItems[0]?.count})">구매하기</button>` : ''}
+            </td>
+             <td>
+                ${item.status === 'ORDER' || item.status === 'PAYMENT' ? `<button class="btn btn-danger" onclick="cancelOrder(${item.id})">취소</button>` : ''}
+            </td>
+        `;
+            tbody.appendChild(row);
+        });
+    });
+
+    async function cancelOrder(orderId) {
+        if (!confirm('정말 취소하시겠습니까?')) return;
+        await fetch(`/order/v1/${orderId}/cancel`, {
+            method: 'POST'
+        });
+        alert('주문이 취소되었습니다.');
+        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+    });
+</script>
+<script type="text/javascript" th:src="@{/js/payment.js}"></script>
+</html>

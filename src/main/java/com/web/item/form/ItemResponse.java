@@ -17,7 +17,7 @@ import lombok.Setter;
 public class ItemResponse {
 
     @Schema(name = "상품 번호")
-    private Long itemId;
+    private Long id;
 
     @Schema(name = "상품 이름")
     private String name;
@@ -42,7 +42,7 @@ public class ItemResponse {
 
 
     private ItemResponse(Item item) {
-        this.itemId = item.getId();
+        this.id = item.getId();
         this.name = item.getName();
         this.price = item.getPrice();
         this.stockQuantity = item.getStockQuantity();
