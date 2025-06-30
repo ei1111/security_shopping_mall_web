@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class ItemApiController {
     private final ItemSerivce itemSerivce;
 
-
     @PostMapping("/new")
     @Operation(summary = "상품 정보 등록 API")
     public void save(

@@ -80,4 +80,16 @@ public class Member extends BaseTimeEntity {
             this.email = request.getEmail();
         }
     }
+
+    public String getCity() {
+        return address.getCity();
+    }
+
+    public String getStreet() {
+        return address.getStreet();
+    }
+
+    public String getZipCode() {
+        return address.getZipcode();
+    }
 }

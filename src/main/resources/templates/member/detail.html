@@ -25,6 +25,9 @@
     <th>이름</th>
     <th>아이디</th>
     <th>이메일</th>
+    <th>도시</th>
+    <th>도로</th>
+    <th>우편번호</th>
   </tr>
   </thead>
   <tbody>
@@ -32,6 +35,9 @@
     <td id="name"></td>
     <td id="userId"></td>
     <td id="email"></td>
+    <td id="city"></td>
+    <td id="street"></td>
+    <td id="zipcode"></td>
   </tr>
   </tbody>
 </table>
@@ -53,6 +59,9 @@
       document.getElementById('userId').innerText = member.userId;
       document.getElementById('email').innerText = member.email;
       document.getElementById('id').value = member.id;
+      document.getElementById('city').innerText = member.city;
+      document.getElementById('street').innerText = member.street;
+      document.getElementById('zipcode').innerText = member.zipcode;
     } catch (error) {
       console.error(error);
     }

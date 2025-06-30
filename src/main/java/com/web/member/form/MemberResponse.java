@@ -46,10 +46,9 @@ public class MemberResponse {
                 member.getPassword(),
                 member.getName(),
                 member.getEmail(),
-                member.getAddress().getCity(),
-                member.getAddress().getStreet(),
-                member.getAddress().getZipcode()
-
+                member.getCity(),
+                member.getStreet(),
+                member.getZipCode()
         );
     }
 }
