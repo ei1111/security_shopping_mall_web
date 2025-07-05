@@ -1,3 +1,4 @@
+/*
 package com.web.coupon.kafka;
 
 import lombok.RequiredArgsConstructor;
@@ -14,3 +15,4 @@ public class CouponCreateProducer {
         kafkaTemplate.send("coupon_create", userId);
     }
 }
+*/

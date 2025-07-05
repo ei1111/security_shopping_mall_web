@@ -1,3 +1,4 @@
+/*
 package com.web.coupon.repository;
 
 
@@ -11,6 +12,16 @@ public class CouponRedisRepository {
     private final RedisTemplate<String, String> redisTemplate;
 
     public Long increment() {
-        return redisTemplate.opsForValue().increment("coupon_count");
+        return redisTemplate
+                .opsForValue()
+                .increment("coupon_count");
+    }
+
+    public Long add(Long userId){
+        return redisTemplate
+                .opsForSet()
+                .add("applied_user", userId.toString());
+
     }
 }
+*/

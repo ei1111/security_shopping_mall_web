@@ -1,3 +1,4 @@
+/*
 package com.web.coupon.service;
 
 
@@ -63,4 +64,34 @@ class CouponServiceTest {
         long count = couponRepository.count();
         assertThat(count).isEqualTo(100);
     }
-}
+
+    @DisplayName("한명당_한개의_쿠폰을_만들_수_있다")
+    @Test
+    void 한명당_한개의_쿠폰을_만들_수_있다() throws Exception {
+        //given
+        int threadCount = 1000;
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+
+        //다른 쓰레드에서 수행하는 작업의 요청이 끝날때 까지 기다려주는 클래스
+        CountDownLatch latch = new CountDownLatch(threadCount);
+        //when
+        for (int i = 0; i < threadCount; i++) {
+            long userId = i;
+            executorService.submit(() -> {
+                        try {
+                            couponService.issueCoupon(1L);
+                        } finally {
+                            latch.countDown();
+                        }
+                    }
+            );
+        }
+        latch.await();
+        Thread.sleep(10000);
+        //then
+        long count = couponRepository.count();
+        //쿠폰을 한사람당 한개만 발급하도록 제한 하였기에 결과는 1개
+        assertThat(count).isEqualTo(1);
+    }
+
+}*/
