@@ -28,13 +28,14 @@ public class OrderApiController {
 
     @PostMapping("/new")
     @Operation(summary = "주문 정보 등록 API")
-    public void order(@Valid @RequestBody OrderRequest request) {
-        orderService.order(request.memberId(), request.itemId(), request.count());
+    public ResponseEntity<String> order(@Valid @RequestBody OrderRequest request) {
+        orderService.order(request.itemId(), request.count());
+        return ResponseEntity.ok("order success");
     }
 
     @GetMapping("/list")
     @Operation(summary = "주문 정보 리스트 API")
-    public ResponseEntity<List<OrderResponse>>   orderSearch(OrderSearchRequest orderSearch) {
+    public ResponseEntity<List<OrderResponse>> orderSearch(OrderSearchRequest orderSearch) {
         return  ResponseEntity.ok(orderService.orderSearch(orderSearch));
     }
 

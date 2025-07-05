@@ -20,9 +20,9 @@ public class Address {
     private String zipcode;
 
 
-    public Address(MemberRequest request) {
-        this.city = request.getCity();
-        this.street = request.getStreet();
-        this.zipcode = request.getZipcode();
+    public Address(String city, String street, String zipcode) {
+        this.city = city;
+        this.street = street;
+        this.zipcode = zipcode;
     }
 }

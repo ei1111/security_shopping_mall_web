@@ -1,5 +1,6 @@
 package com.web.member.form;
 
+import com.web.member.domain.Address;
 import com.web.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -44,6 +45,7 @@ public class MemberRequest {
 
 
     public Member fromMeber(PasswordEncoder passwordEncoder) {
-        return Member.from(userId, passwordEncoder.encode(password), name, email);
+        Address address = new Address(city, street, zipcode);
+        return Member.from(userId, passwordEncoder.encode(password), name, email, address);
     }
 }

@@ -14,14 +14,25 @@ public class ItemViewController {
         return "item/createItemForm";
     }
 
-    @GetMapping("/itemList")
-    public String itemListForm() {
-        return "item/itemList";
+    @GetMapping("/register")
+    public String itemRegisterForm() {
+        return "item/itemRegisterForm";
     }
 
     @GetMapping("/{itemId}/edit")
     public String updateForm(@PathVariable Long itemId, Model model) {
         model.addAttribute("itemId", itemId);
         return "item/updateItemForm";
+    }
+
+    @GetMapping("/itemList")
+    public String itemListForm() {
+        return "item/itemListForm";
+    }
+
+    @GetMapping("{itemId}/detail")
+    public String itemDetailForm(@PathVariable Long itemId, Model model) {
+        model.addAttribute("itemId", itemId);
+        return "item/itemDetailForm";
     }
 }

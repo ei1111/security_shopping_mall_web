@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head th:replace="~{fragments/common :: head('상품등록')}">
+    <script defer="" src="/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
+</head>
+
+
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+         th:replace="fragments/common :: menu('itemRegister')">
+    </nav>
+</header>
+<body>
+<div class="container py-5">
+    <input type="hidden" name="itemId" id="itemId" />
+    <a href="/item/itemList" class="btn btn-secondary mb-4">← 목록으로 돌아가기</a>
+
+    <div id="itemDetail" class="row justify-content-center">
+        <!-- JavaScript로 상품 상세 내용이 추가될 부분 -->
+    </div>
+</div>
+
+<script>
+    // URL에서 itemId 추출
+    function getItemIdFromUrl() {
+        const urlParts = window.location.pathname.split('/');
+        return urlParts[urlParts.length - 2]; // /item/{id}/detail → id 추출
+    }
+
+    // 페이지 로드 시 동작
+    window.addEventListener('DOMContentLoaded', () => {
+        const itemId = getItemIdFromUrl();
+        document.getElementById('itemId').value = itemId; // hidden input에 저장
+
+        fetchItemDetail(itemId);
+    });
+
+    // 서버에서 상품 상세 정보 가져오기
+    function fetchItemDetail(itemId) {
+        fetch(`/item/v1/${itemId}/detail`)
+        .then(response => {
+            if (!response.ok) throw new Error('상품 정보를 불러오는데 실패했습니다.');
+            return response.json();
+        })
+        .then(item => renderItemDetail(item))
+        .catch(error => console.error('에러:', error));
+    }
+
+    // 상품 상세 화면 렌더링
+    function renderItemDetail(item) {
+        const container = document.getElementById('itemDetail');
+
+        container.innerHTML = `
+            <div class="col-md-8">
+                <div class="card mb-4 shadow-sm">
+                    <img src="${item.imagePath}" class="card-img-top" alt="${item.name}">
+                    <div class="card-body">
+                        <h2 class="card-title mb-3">${item.name}</h2>
+                        <h4 class="text-danger mb-3">가격: ${item.price.toLocaleString()}원</h4>
+                        <p class="card-text">${item.description || '상품 설명이 없습니다.'}</p>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <label for="quantityInput" class="me-2 mb-0">수량</label>
+                        <input type="number" id="quantityInput" class="form-control" value="1" min="1" style="width: 80px;">
+                      </div>
+
+                        <!-- 주문 버튼 -->
+                         <div class="mt-auto text-end">
+                            <button class="btn btn-primary" onclick="orderItem(${item.id})">주문하기</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+
+    // 주문 요청 함수
+    function orderItem(itemId) {
+        const quantity = document.getElementById('quantityInput').value;
+
+        if (quantity < 1) {
+            alert('수량은 1개 이상이어야 합니다.');
+            return;
+        }
+
+        if (!confirm(`${quantity}개 주문하시겠습니까?`)) {
+            return;
+        }
+
+        fetch('/order/v1/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ itemId: itemId, count: parseInt(quantity) })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('주문 요청 실패');
+            return response.text(); // 빈 응답도 허용
+        })
+        .then(result => {
+            alert('주문이 완료되었습니다!');
+            window.location.href = '/order/orderList';
+        })
+        .catch(error => {
+            console.error('주문 실패:', error);
+            alert('주문 처리 중 오류가 발생했습니다.');
+        });
+    }
+</script>
+</body>
+</html>

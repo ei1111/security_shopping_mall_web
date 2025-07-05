@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="kr">
 
-<head th:replace="~{fragments/common :: head('상품목록')}">
+<head th:replace="~{fragments/common :: head('상품등록')}">
     <script defer="" src="/js/bootstrap.bundle.min.js"
             integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
 </head>
@@ -10,7 +10,7 @@
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
-         th:replace="fragments/common :: menu('itemList')">
+         th:replace="fragments/common :: menu('itemRegister')">
     </nav>
 
     <style>
@@ -38,7 +38,10 @@
 </header>
 <body>
 <div class="container">
-    <h1 class="p-5 mt-5">상품리스트</h1>
+    <h1 class="p-5 mt-5">상품등록</h1>
+    <div style="text-align: right">
+        <a href="/item/createItemForm"  class="btn btn-danger">상품 등록</a>
+    </div>
     <div>
         <table class="table table-striped">
             <thead>

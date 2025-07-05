@@ -63,6 +63,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         /*role 추출*/
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        //Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();

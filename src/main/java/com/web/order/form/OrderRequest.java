@@ -7,11 +7,6 @@ import jakarta.validation.constraints.Positive;
 public record OrderRequest(
         @NotNull
         @Positive
-        @Schema(description = "회원 번호", example = "1")
-        Long memberId,
-
-        @NotNull
-        @Positive
         @Schema(description = "상품 번호", example = "1")
         Long itemId,
 

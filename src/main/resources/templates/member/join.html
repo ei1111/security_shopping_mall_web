@@ -15,7 +15,7 @@
 </header>
 
 <body class="bg-light">
-<h1 class="p-5 text-center mt-5">회원가입</h1>
+<h1 class="p-5 text-center mt-3">회원가입</h1>
 
 <div class="container d-flex justify-content-center">
   <div class="card p-4 shadow" style="width: 400px">
@@ -39,6 +39,21 @@
       <input id="email" name="email" type="email" class="form-control" placeholder="이메일을 입력해주세요">
     </div>
 
+    <div class="mb-3">
+      <label for="city" class="form-label">거주도시</label>
+      <input id="city" name="city" type="text" class="form-control" placeholder="이메일을 입력해주세요">
+    </div>
+
+    <div class="mb-3">
+      <label for="street" class="form-label">도로명</label>
+      <input id="street" name="street" type="text" class="form-control" placeholder="도로명을 입력해주세요">
+    </div>
+
+    <div class="mb-3">
+      <label for="zipcode" class="form-label">우편번호</label>
+      <input id="zipcode" name="zipcode" type="text" class="form-control" placeholder="우편번호을 입력해주세요">
+    </div>
+
     <button id="signupBtn" class="btn btn-primary w-100">회원가입 완료</button>
     <button id="cancelBtn" class="btn btn-danger w-100 mt-2">취소</button>
   </div>
@@ -50,7 +65,10 @@
       userId: document.getElementById('userId').value,
       password: document.getElementById('password').value,
       name: document.getElementById('name').value,
-      email: document.getElementById('email').value
+      email: document.getElementById('email').value,
+      city: document.getElementById('city').value,
+      street: document.getElementById('street').value,
+      zipcode: document.getElementById('zipcode').value
     };
 
     try {

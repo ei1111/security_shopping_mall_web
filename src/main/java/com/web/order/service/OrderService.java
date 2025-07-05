@@ -1,5 +1,6 @@
 package com.web.order.service;
 
+import com.web.common.util.SecurityUtill;
 import com.web.delivery.domain.Delivery;
 import com.web.item.domain.Item;
 import com.web.item.repository.ItemRepository;
@@ -30,10 +31,9 @@ public class OrderService {
 
 
     @Transactional
-    public void order(Long memberId, Long itemId, int count) {
+    public void order(Long itemId, int count) {
         Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(IllegalArgumentException::new);
+        Member member = memberRepository.findByUserId(SecurityUtill.getUserId());
 
         Delivery delivery = new Delivery(member.getAddress());
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);

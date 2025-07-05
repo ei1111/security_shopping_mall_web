@@ -41,7 +41,8 @@
             <label for="isbn">ISBN</label>
             <input type="text" id="isbn" class="form-control" placeholder="ISBN을 입력하세요">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">입력</button>
+        <button type="button" class="btn btn-secondary" id="cancelButton">취소</button>
     </form>
     <br/>
 </div> <!-- /container -->
@@ -81,6 +82,10 @@
         }).catch(error => {
             alert("네트워크 오류: " + error);
         });
+    });
+
+    document.getElementById('cancelButton').addEventListener('click', function () {
+        window.history.back(); // 이전 페이지로 이동
     });
 </script>
 </body>

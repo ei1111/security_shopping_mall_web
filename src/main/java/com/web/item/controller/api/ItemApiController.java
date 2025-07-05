@@ -42,8 +42,8 @@ public class ItemApiController {
         return ResponseEntity.ok(itemSerivce.findAll());
     }
 
-    @GetMapping("/{itemId}/edit")
-    @Operation(summary = "상품 조회 API")
+    @GetMapping("/{itemId}/detail")
+    @Operation(summary = "상품 상세 조회 API")
     public ResponseEntity<ItemResponse> itemList(@PathVariable Long itemId) {
         return ResponseEntity.ok(itemSerivce.findById(itemId));
     }

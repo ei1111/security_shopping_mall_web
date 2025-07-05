@@ -51,20 +51,21 @@ public class Member extends BaseTimeEntity {
     @Embedded
     private Address address;
 
-    public Member(String userId, String password, String name, String email) {
+    public Member(String userId, String password, String name, String email, Address address) {
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.email = email;
         this.role = makeRole(userId);
+        this.address = address;
     }
 
     private String makeRole(String userId) {
         return userId.equalsIgnoreCase("admin") ? "ROLE_ADMIN": "ROLE_USER";
     }
 
-    public static Member from(String userId, String password, String name, String email) {
-        return new Member(userId, password, name, email);
+    public static Member from(String userId, String password, String name, String email,Address address) {
+        return new Member(userId, password, name, email, address);
     }
 
     public void update(MemberRequest request, PasswordEncoder passwordEncoder) {

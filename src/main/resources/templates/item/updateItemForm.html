@@ -66,7 +66,7 @@
     const itemId = pathParts[2]; // 예: /item/123/edit → "123"
     // 2. 기존 데이터 조회해서 input에 채우기
     document.addEventListener("DOMContentLoaded", function () {
-        fetch(`/item/v1/${itemId}/edit`)
+        fetch(`/item/v1/${itemId}/detail`)
         .then(response => response.json())
         .then(item => {
             document.getElementById("name").value = item.name;
