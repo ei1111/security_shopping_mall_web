@@ -1,6 +1,6 @@
 package com.web.order.repository;
 
-import com.web.order.domain.Order;
+import com.web.order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

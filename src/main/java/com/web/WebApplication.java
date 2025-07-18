@@ -1,10 +1,9 @@
 package com.web;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.web.common.util.SecurityUtill;
+import com.web.global.common.util.SecurityUtill;
 import jakarta.persistence.EntityManager;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

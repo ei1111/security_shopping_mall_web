@@ -2,17 +2,15 @@ package com.web.board.repository;
 
 
 
-import static com.web.board.domain.QBoard.*;
-import static com.web.member.domain.QMember.*;
+import static com.web.board.entity.QBoard.*;
+import static com.web.member.entity.QMember.*;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.web.board.domain.QBoard;
 import com.web.board.form.BoardResponse;
 import com.web.board.form.QBoardResponse;
-import com.web.member.domain.QMember;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;

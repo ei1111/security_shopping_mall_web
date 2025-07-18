@@ -1,17 +1,17 @@
 package com.web.order.service;
 
-import com.web.common.util.SecurityUtill;
-import com.web.delivery.domain.Delivery;
-import com.web.item.domain.Item;
+import com.web.global.common.util.SecurityUtill;
+import com.web.delivery.entity.Delivery;
+import com.web.item.entity.Item;
 import com.web.item.repository.ItemRepository;
-import com.web.member.domain.Member;
+import com.web.member.entity.Member;
 import com.web.member.repository.MemberRepository;
-import com.web.order.domain.Order;
+import com.web.order.entity.Order;
 import com.web.order.form.OrderResponse;
 import com.web.order.form.OrderSearchRequest;
 import com.web.order.repository.OrderRepository;
-import com.web.orderItem.domain.OrderItem;
-import com.web.payment.domain.Payment;
+import com.web.orderItem.entity.OrderItem;
+import com.web.payment.entity.Payment;
 import com.web.payment.repository.PaymentRepository;
 import com.web.payment.service.PaymentService;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.web.member.domain;
+package com.web.member.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 

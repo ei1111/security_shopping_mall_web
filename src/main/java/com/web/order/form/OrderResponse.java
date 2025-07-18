@@ -1,7 +1,7 @@
 package com.web.order.form;
 
-import com.web.order.domain.Order;
-import com.web.order.domain.OrderStatus;
+import com.web.order.entity.Order;
+import com.web.order.entity.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;

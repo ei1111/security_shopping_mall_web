@@ -3,10 +3,11 @@ package com.web.order.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.web.common.util.SecurityUtill;
-import com.web.member.domain.QMember;
-import com.web.order.domain.OrderStatus;
-import com.web.order.domain.QOrder;
+import com.web.global.common.util.SecurityUtill;
+import com.web.member.entity.QMember;
+import com.web.member.entity.Role;
+import com.web.order.entity.OrderStatus;
+import com.web.order.entity.QOrder;
 import com.web.order.form.OrderResponse;
 import com.web.order.form.OrderSearchRequest;
 import java.util.List;
@@ -45,7 +46,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     private BooleanExpression eqMemberId() {
-        System.out.println("jpaQueryFactory = " + SecurityUtill.getUserRole());
-        return "ROLE_ADMIN".equals(SecurityUtill.getUserRole()) ? null : QMember.member.userId.eq(SecurityUtill.getUserId());
+        return Role.ADMIN.equals(SecurityUtill.getUserRole()) ? null : QMember.member.userId.eq(SecurityUtill.getUserId());
     }
 }

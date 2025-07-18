@@ -1,4 +1,4 @@
-package com.web.board.domain;
+package com.web.board.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -40,7 +40,7 @@ public class QBoard extends EntityPathBase<Board> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
-    public final com.web.member.domain.QMember member;
+    public final com.web.member.entity.QMember member;
 
     public final StringPath title = createString("title");
 
@@ -62,7 +62,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public QBoard(Class<? extends Board> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new com.web.member.domain.QMember(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new com.web.member.entity.QMember(forProperty("member")) : null;
     }
 
 }

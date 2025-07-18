@@ -1,6 +1,6 @@
 package com.web.item.form;
 
-import com.web.item.domain.Item;
+import com.web.item.entity.Item;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.AccessLevel;

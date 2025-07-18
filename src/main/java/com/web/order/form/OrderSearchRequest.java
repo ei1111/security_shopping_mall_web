@@ -1,7 +1,7 @@
 package com.web.order.form;
 
 
-import com.web.order.domain.OrderStatus;
+import com.web.order.entity.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,5 @@
 package com.web.member.controller.api;
 
-import com.web.common.util.SecurityUtill;
 import com.web.member.form.MemberRequest;
 import com.web.member.form.MemberResponse;
 import com.web.member.service.MemberService;
@@ -9,7 +8,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,8 +35,8 @@ public class MemberApiController {
 
     @GetMapping("/detail")
     @Operation(summary = "회원 아이디로 상세 조회 API")
-    public ResponseEntity<MemberResponse> detail() {
-        String userId = SecurityUtill.getUserId();
+    public ResponseEntity<MemberResponse> detail(@AuthenticationPrincipal User user) {
+        String userId = user.getUsername();
         return ResponseEntity.ok().body(memberService.findByUserId(userId));
     }
 

@@ -1,15 +1,15 @@
 package com.web.board.service;
 
-import com.web.board.domain.Board;
+import com.web.board.entity.Board;
 import com.web.board.form.BoardPageResponse;
 import com.web.board.form.BoardRequest;
 import com.web.board.form.BoardResponse;
 import com.web.board.repository.BoardRepository;
-import com.web.common.util.SecurityUtill;
-import com.web.member.domain.Member;
+import com.web.global.common.util.SecurityUtill;
+import com.web.member.entity.Member;
 import com.web.member.repository.MemberRepository;
-import com.web.redis.RedisKeyPrefix;
-import com.web.redis.RedisManager;
+import com.web.global.redis.RedisKeyPrefix;
+import com.web.global.redis.RedisManager;
 import io.micrometer.core.annotation.Counted;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

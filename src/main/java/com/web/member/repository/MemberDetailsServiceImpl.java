@@ -1,7 +1,7 @@
 package com.web.member.repository;
 
-import com.web.member.domain.CustomUserDetails;
-import com.web.member.domain.Member;
+import com.web.member.entity.CustomUserDetails;
+import com.web.member.entity.Member;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

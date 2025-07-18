@@ -1,12 +1,11 @@
 package com.web.item.service;
 
-import com.web.board.form.BoardResponse;
-import com.web.item.domain.Item;
+import com.web.item.entity.Item;
 import com.web.item.form.ItemRequest;
 import com.web.item.form.ItemResponse;
 import com.web.item.repository.ItemRepository;
-import com.web.redis.RedisKeyPrefix;
-import com.web.redis.RedisManager;
+import com.web.global.redis.RedisKeyPrefix;
+import com.web.global.redis.RedisManager;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;

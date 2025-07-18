@@ -1,12 +1,11 @@
 
 package com.web.board.controller.api;
 
-import com.web.board.domain.Board;
+import com.web.board.entity.Board;
 import com.web.board.form.BoardRequest;
-import com.web.board.form.BoardResponse;
 import com.web.board.repository.BoardRepository;
 import com.web.board.service.BoardService;
-import com.web.member.domain.Member;
+import com.web.member.entity.Member;
 import com.web.member.form.MemberRequest;
 import com.web.member.form.MemberResponse;
 import com.web.member.repository.MemberRepository;
@@ -18,8 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 

@@ -1,9 +1,8 @@
 package com.web.board.form;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.web.board.domain.Board;
-import com.web.common.util.SecurityUtill;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.web.board.entity.Board;
+import com.web.global.common.util.SecurityUtill;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

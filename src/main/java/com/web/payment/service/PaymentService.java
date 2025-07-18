@@ -1,8 +1,8 @@
 package com.web.payment.service;
 
-import com.web.order.domain.Order;
+import com.web.order.entity.Order;
 import com.web.order.repository.OrderRepository;
-import com.web.payment.domain.Payment;
+import com.web.payment.entity.Payment;
 import com.web.payment.eventListener.PaymentCancelEvent;
 import com.web.payment.form.PaymentRequest;
 import com.web.payment.repository.PaymentRepository;

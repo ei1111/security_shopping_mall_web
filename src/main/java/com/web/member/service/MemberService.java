@@ -1,10 +1,9 @@
 package com.web.member.service;
 
-import com.web.member.domain.Member;
+import com.web.member.entity.Member;
 import com.web.member.form.MemberRequest;
 import com.web.member.form.MemberResponse;
 import com.web.member.repository.MemberRepository;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,6 +1,6 @@
 package com.web.order.form;
 
-import com.web.orderItem.domain.OrderItem;
+import com.web.orderItem.entity.OrderItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.Getter;
