@@ -82,7 +82,8 @@ public class SecurityConfig {
         //경로별 인가 작업
         httpSecurity.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
+                        //.anyRequest().authenticated()
                 //.requestMatchers("/admin").hasRole("ADMIN").anyRequest().authenticated()
                 // .anyRequest().permitAll()
         );
