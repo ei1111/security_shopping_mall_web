@@ -75,11 +75,11 @@
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                         <td>${item.rowNum}</td>
-                        <td><img src=${item.imagePath} alt="상품 이미지" ></td>
+                        <td><img src="${item.imagePath}" alt="상품 이미지" ></td>
                         <td>${item.name}</td>
                         <td>${item.price}</td>
                         <td>${item.stockQuantity}</td>
-                        <td><a href="/item/${item.itemId}/edit" class="btn btn-primary">수정</a></td>
+                        <td><a href="/item/${item.id}/edit" class="btn btn-primary">수정</a></td>
                     `;
                 tbody.appendChild(tr);
             });
