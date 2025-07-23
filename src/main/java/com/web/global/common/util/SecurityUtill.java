@@ -8,10 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtill {
-    private static Authentication authentication;
-
     public static String getUserId() {
-        authentication =   SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         String userId = authentication.getName();
 
         if (Objects.isNull(userId)) {
@@ -22,7 +21,7 @@ public class SecurityUtill {
     }
 
     public static String getUserRole() {
-        authentication =   SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String role = authentication.getAuthorities().iterator().next().getAuthority().toString();
 
         if (Objects.isNull(role)) {

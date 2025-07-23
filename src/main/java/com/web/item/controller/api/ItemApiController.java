@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +44,7 @@ public class ItemApiController {
     @GetMapping("/{itemId}/detail")
     @Operation(summary = "상품 상세 조회 API")
     public ResponseEntity<ItemResponse> itemList(@PathVariable Long itemId) {
-        return ResponseEntity.ok(itemSerivce.findById(itemId));
+        return ResponseEntity.ok(itemSerivce.redisFindById(itemId));
     }
 
     @PutMapping("/{itemId}/edit")
@@ -55,6 +54,6 @@ public class ItemApiController {
             @RequestPart(value = "image", required = false) MultipartFile imageFile,
             @RequestPart("data") ItemRequest request
     ) {
-        itemSerivce.update(itemId, imageFile, request);
+        itemSerivce.redisUpdate(itemId, imageFile, request);
     }
 }

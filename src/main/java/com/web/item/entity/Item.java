@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.Objects;
 import java.util.function.Consumer;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,6 +48,17 @@ public class Item extends BaseEntity {
 
     @Comment( "상품 이미지 주소")
     private String imagePath;
+
+    @Builder
+    public Item(String name, int price, int stockQuantity, String author, String isbn,
+            String imagePath) {
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.author = author;
+        this.isbn = isbn;
+        this.imagePath = imagePath;
+    }
 
     private Item(ItemRequest request, String imagePath) {
         this.name = request.name();

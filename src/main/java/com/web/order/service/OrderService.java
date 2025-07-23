@@ -11,6 +11,7 @@ import com.web.order.form.OrderResponse;
 import com.web.order.form.OrderSearchRequest;
 import com.web.order.repository.OrderRepository;
 import com.web.orderItem.entity.OrderItem;
+import com.web.orderItem.repository.OrderItemRepository;
 import com.web.payment.entity.Payment;
 import com.web.payment.repository.PaymentRepository;
 import com.web.payment.service.PaymentService;
@@ -28,17 +29,23 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
     private final PaymentService paymentService;
+    private final OrderItemRepository orderItemRepository;
 
 
     @Transactional
     public void order(Long itemId, int count) {
-        Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
+        //Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
+        Item item = itemRepository.findByIdPerssimsticLock(itemId).orElseThrow(IllegalArgumentException::new);
         Member member = memberRepository.findByUserId(SecurityUtill.getUserId());
 
         Delivery delivery = new Delivery(member.getAddress());
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
         Order order = Order.from(member, delivery, orderItem);
+
+        itemRepository.save(item);
+        orderItemRepository.save(orderItem);
         orderRepository.save(order);
+
     }
 
     public List<OrderResponse> orderSearch(OrderSearchRequest request) {

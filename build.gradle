@@ -52,10 +52,6 @@ dependencies {
 	/*devtools -> 빠른 애플리케이션 재시작(수정사항을 빨리 볼수 있다)*/
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	/*test*/
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
 	/*actuator*/
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
@@ -100,6 +96,21 @@ dependencies {
 
 	/*kafka*/
 	implementation 'org.springframework.kafka:spring-kafka'
+
+	/* test시 사용되는 코드*/
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.openjdk.jmh:jmh-core:1.37'
+	testAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
+
+	testImplementation 'org.testcontainers:testcontainers:1.19.6'
+	testImplementation 'org.testcontainers:junit-jupiter:1.19.6'
+	testImplementation 'org.testcontainers:mysql:1.19.6'
+
+	/* 테스트에서 Lombok 사용을 위한 의존성 추가 */
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {

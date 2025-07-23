@@ -41,7 +41,7 @@ public class ItemSerivce {
                 .toList();
     }
 
-    public ItemResponse findById(Long itemId) {
+    public ItemResponse redisFindById(Long itemId) {
         if (Objects.nonNull(redisManager.get(RedisKeyPrefix.ITEM_DETAIL, itemId, ItemResponse.class))) {
             return redisManager.get(RedisKeyPrefix.ITEM_DETAIL, itemId, ItemResponse.class);
         }
@@ -56,7 +56,7 @@ public class ItemSerivce {
     }
 
     @Transactional
-    public void update(Long itemId, MultipartFile imageFile, @Valid ItemRequest request) {
+    public void redisUpdate(Long itemId, MultipartFile imageFile, @Valid ItemRequest request) {
         Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
         String imagePath = null;
         // 이미지가 새로 업로드된 경우만 파일 저장
