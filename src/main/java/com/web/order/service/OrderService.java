@@ -1,7 +1,7 @@
 package com.web.order.service;
 
-import com.web.global.common.util.SecurityUtill;
 import com.web.delivery.entity.Delivery;
+import com.web.global.common.util.SecurityUtill;
 import com.web.item.entity.Item;
 import com.web.item.repository.ItemRepository;
 import com.web.member.entity.Member;
@@ -11,8 +11,8 @@ import com.web.order.form.OrderResponse;
 import com.web.order.form.OrderSearchRequest;
 import com.web.order.repository.OrderRepository;
 import com.web.orderItem.entity.OrderItem;
-import com.web.orderItem.repository.OrderItemRepository;
 import com.web.payment.entity.Payment;
+import com.web.payment.facade.CancelFacadeEvent;
 import com.web.payment.repository.PaymentRepository;
 import com.web.payment.service.PaymentService;
 import java.util.List;
@@ -28,13 +28,12 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
-    private final PaymentService paymentService;
-    private final OrderItemRepository orderItemRepository;
+    private final CancelFacadeEvent cancelFacadeEvent;
 
 
     @Transactional
     public void order(Long itemId, int count) {
-        //Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
+        //비관적락으로 재고 감소 문제 해결
         Item item = itemRepository.findByIdPerssimsticLock(itemId).orElseThrow(IllegalArgumentException::new);
         Member member = memberRepository.findByUserId(SecurityUtill.getUserId());
 
@@ -42,10 +41,7 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
         Order order = Order.from(member, delivery, orderItem);
 
-        itemRepository.save(item);
-        orderItemRepository.save(orderItem);
         orderRepository.save(order);
-
     }
 
     public List<OrderResponse> orderSearch(OrderSearchRequest request) {
@@ -60,7 +56,7 @@ public class OrderService {
         paymentRepository.findByOrder(order)
                 .map(Payment::getImpUid)
                 .ifPresent(impUid -> {
-                    paymentService.cancel(impUid);
+                    cancelFacadeEvent.cancelEvent(impUid);
                 });
     }
 }

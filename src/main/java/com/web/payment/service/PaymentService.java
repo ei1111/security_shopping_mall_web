@@ -41,7 +41,5 @@ public class PaymentService {
 
         //status 필드 cancel으로 변경
         payment.cancel();
-        //결제 취소 요청
-        eventPublisher.publishEvent(new PaymentCancelEvent(impUid));
     }
 }
