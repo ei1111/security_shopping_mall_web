@@ -1,5 +1,6 @@
 package com.web.member.controller.api;
 
+import com.web.global.common.util.SecurityUtill;
 import com.web.member.form.MemberRequest;
 import com.web.member.form.MemberResponse;
 import com.web.member.service.MemberService;
@@ -35,8 +36,8 @@ public class MemberApiController {
 
     @GetMapping("/detail")
     @Operation(summary = "회원 아이디로 상세 조회 API")
-    public ResponseEntity<MemberResponse> detail(@AuthenticationPrincipal User user) {
-        String userId = user.getUsername();
+    public ResponseEntity<MemberResponse> detail() {
+        String userId = SecurityUtill.getUserId();
         return ResponseEntity.ok().body(memberService.findByUserId(userId));
     }
 

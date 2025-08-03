@@ -11,6 +11,9 @@ services:
     command:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_bin"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
   prometheus:
     image: prom/prometheus
     volumes:
@@ -26,14 +29,20 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - ./grafana/volume:/var/lib/grafana
+      #- ./grafana/volume:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
   redis:
     image: 'redis:6.0.20'
     container_name: redis_security
     ports:
       - "6379:6379"
     volumes:
-      - ./.data/redis:/data
+      -  ./.data/redis:/data
+
+volumes:
+  mysql_data:
+  grafana_data:
+
 #  zookeeper:
 #    image: 'bitnami/zookeeper:3.7.2'
 #    container_name: coupon_zookeeper
