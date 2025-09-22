@@ -28,8 +28,8 @@
     <appender-ref ref="STDOUT"/>
   </root>
 
-  <logger name="com.web.board.service" level="INFO">
+<!--  <logger name="com.web.board.service" level="INFO">
     <appender-ref ref="JSON_FILE"/>
-  </logger>
+  </logger>-->
 
 </configuration>

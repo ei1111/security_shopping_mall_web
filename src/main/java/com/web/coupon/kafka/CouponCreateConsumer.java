@@ -1,9 +1,9 @@
-/*package com.web.coupon.kafka;
+package com.web.coupon.kafka;
 
-import com.web.coupon.domain.Coupon;
+import com.web.coupon.entity.Coupon;
+import com.web.coupon.entity.FailedEvent;
 import com.web.coupon.repository.CouponRepository;
-import com.web.couponfailed.domain.FailedEvent;
-import com.web.couponfailed.repository.FailedEventRepository;
+import com.web.coupon.repository.FailedEventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -28,4 +28,4 @@ public class CouponCreateConsumer {
             failedEventRepository.save(new FailedEvent(userId));
         }
     }
-}*/
+}

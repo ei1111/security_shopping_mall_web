@@ -1,5 +1,4 @@
-/*
-package com.web.couponfailed.domain;
+package com.web.coupon.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,4 +19,3 @@ public class FailedEvent {
         this.userId = userId;
     }
 }
-*/

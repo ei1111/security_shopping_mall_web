@@ -48,6 +48,7 @@ public class Member extends BaseTimeEntity {
     @Column(unique = true)
     private String email;
 
+    @Comment("권한")
     @Enumerated(EnumType.STRING)
     private Role role;
 

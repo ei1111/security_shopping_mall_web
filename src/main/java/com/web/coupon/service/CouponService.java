@@ -1,4 +1,3 @@
-/*
 package com.web.coupon.service;
 
 import com.web.coupon.kafka.CouponCreateProducer;
@@ -31,4 +30,3 @@ public class CouponService {
         couponCreateProducer.crate(userId);
     }
 }
-*/

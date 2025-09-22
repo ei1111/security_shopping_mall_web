@@ -1,10 +1,8 @@
-/*
-package com.web.couponfailed.repository;
+package com.web.coupon.repository;
 
-import com.web.couponfailed.domain.FailedEvent;
+import com.web.coupon.entity.FailedEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FailedEventRepository extends JpaRepository<FailedEvent,Long> {
 
 }
-*/

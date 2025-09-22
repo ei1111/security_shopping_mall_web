@@ -1,4 +1,4 @@
-/*package com.web.coupon.domain;
+package com.web.coupon.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,4 +22,4 @@ public class Coupon {
     public Coupon(Long userId) {
         this.userId = userId;
     }
-}*/
+}

@@ -8,13 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/payment")
 public class PaymentViewController {
 
-    @GetMapping("/new")
-    public String paymentForm() {
-        return "payment/paymentForm";
-    }
-
-    @GetMapping
+    @GetMapping("/admin")
     public String paymentMyPage() {
-        return "payment/paymentMyPage";
+        return "payment/admin";
     }
 }

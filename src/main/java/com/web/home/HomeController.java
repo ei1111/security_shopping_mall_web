@@ -1,14 +1,13 @@
-package com.web.index;
+package com.web.home;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class HomeController {
 
     @GetMapping({"/index" , "/"})
     public String index(@CookieValue(name = "access_token", required = false) String accessToken, HttpServletRequest request) {

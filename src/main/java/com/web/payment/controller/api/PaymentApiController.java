@@ -1,10 +1,14 @@
 package com.web.payment.controller.api;
 
+import com.web.payment.entity.Payment;
 import com.web.payment.form.PaymentRequest;
 import com.web.payment.service.PaymentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +28,9 @@ public class PaymentApiController {
         paymentService.save(request);
         return ResponseEntity.ok(new PaymentRequest());
     }
-/*
-    추후 관리자만 입장 가능
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Payment>> list() {
         return ResponseEntity.ok(paymentService.findAll());
     }
-*/
 }
