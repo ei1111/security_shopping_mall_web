@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,9 +18,15 @@ public class Coupon {
     @Column(name = "coupon_id")
     private Long id;
 
-    private Long userId;
+    private String couponName;
+    private String couponCode;
 
-    public Coupon(Long userId) {
-        this.userId = userId;
+    private Long count;
+
+    @Builder
+    public Coupon(String couponName,String couponCode, Long count) {
+        this.couponName = couponName;
+        this.couponCode = couponCode;
+        this.count = count;
     }
 }

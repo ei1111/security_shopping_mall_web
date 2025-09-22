@@ -4,18 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor
-public class FailedEvent {
+public class IssueCoupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long couponId;
+    private String userId;
 
-    public FailedEvent(Long couponId) {
+    public IssueCoupon(Long couponId, String userId) {
         this.couponId = couponId;
+        this.userId = userId;
     }
 }
