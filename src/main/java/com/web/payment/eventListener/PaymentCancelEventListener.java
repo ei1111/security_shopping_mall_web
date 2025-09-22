@@ -15,7 +15,7 @@ public class PaymentCancelEventListener {
     private final PaymentClient paymentClient;
 
     //우리 서버의 canel 로직 커밋 후 외부 API 취소 요청 발생
-    @Async
+    @Async("asyncExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handlePaymentCancel(PaymentCancelEvent event) {
         // 외부 결제 API 비동기 호출
